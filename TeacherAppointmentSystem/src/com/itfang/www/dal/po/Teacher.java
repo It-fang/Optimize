@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * @author it-fang
+ * 教师对象
  */
 public class Teacher {
     private int id;

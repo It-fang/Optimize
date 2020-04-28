@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * @author it-fang
+ * 预约申请表对象
  */
 public class Application {
     private int id;

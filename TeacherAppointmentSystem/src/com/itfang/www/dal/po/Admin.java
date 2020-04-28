@@ -2,6 +2,7 @@ package com.itfang.www.dal.po;
 
 /**
  * @@author it-fang
+ * 超级用户对象
  */
 public class Admin {
     private int id;

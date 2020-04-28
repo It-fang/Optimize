@@ -2,6 +2,7 @@ package com.itfang.www.dal.po;
 
 /**
  * @author it-fang
+ * 学生用户对象
  */
 public class StudentUser {
     private int id;

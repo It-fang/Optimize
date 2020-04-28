@@ -7,5 +7,5 @@ import com.itfang.www.ui.BaseServlet;
  * @Description 教师用户的所有相关操作
  * @date 2020-4-27
  */
-public class TeacherServiceImpl extends BaseServlet implements TeacherService {
+public class TeacherServiceImpl implements TeacherService {
 }

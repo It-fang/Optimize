@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author it-fang
- * 用来分页
+ * 分页对象
  * @param <T>
  */
 public class Page<T> {

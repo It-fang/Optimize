@@ -7,5 +7,5 @@ import com.itfang.www.ui.BaseServlet;
  * @Description 学生用户的所有相关操作
  * @date 2020-4-27
  */
-public class AdminServiceImpl extends BaseServlet implements AdminService {
+public class AdminServiceImpl implements AdminService {
 }
