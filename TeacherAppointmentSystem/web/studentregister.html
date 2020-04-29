@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Teacher Appointment System</title>
     <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery.form.js"></script>
+
     <style>
         *{
             margin: 0px;
@@ -60,14 +62,14 @@
             border-radius: 5px;
             padding-left: 10px;
         }
-        #btn_sub{
+        .btn_sub{
             width: 150px;
             height: 40px;
             background-color: dodgerblue;
             border-radius: 5px;
         }
     </style>
-
+    <!--判断信息是否都填满-->
     <script language="JavaScript">
         window.onload = function () {
             document.getElementById("form").onsubmit = function () {
@@ -124,28 +126,46 @@
             }
         }
     </script>
+    <!--通过异步提交判断用户名是否存在-->
     <script>
         //使用Ajax判断注册用户名是否存在
         $(function () {
-            // $("input:first").after("<td><span id='msg'></span></td>");
             $("#username").blur(function () {
                 let username = $(this).val();
-                $.post("StudentUser/checkUsername",{username:username},function (data) {
+                $.post("StudentUser/checkUsername",{username:username},function (resultInfo) {
                     let msg = $("#msg");
-                    if (data.status){
+                    if (resultInfo.status){
                         //用户名存在
                         msg.css("color","red");
-                        msg.html(data.message)
+                        msg.html(resultInfo.message)
                     }else {
                         //用户名不存在
                         msg.css("color","green");
-                        msg.html(data.message)
+                        msg.html(resultInfo.message)
                     }
                 },"json");
             });
         });
     </script>
-
+    <!--判断是否注册成功-->
+    <script>
+        $(function () {
+            $("#button").click(function () {
+                $.post("StudentUser/register",$("#form").serialize(),function (resultInfo) {
+                    if (resultInfo.status){
+                        if (confirm(resultInfo.message)){
+                            window.location.href = "/TeacherAppointmentSystem_war_exploded/studentlogin.html";
+                        }else {
+                            window.location.href = "/TeacherAppointmentSystem_war_exploded/studentregister.html";
+                        }
+                    }else {
+                        alert(resultInfo.message);
+                        window.location.href = "/TeacherAppointmentSystem_war_exploded/studentregister.html";
+                    }
+                },"json");
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="rg_layout">
@@ -156,7 +176,7 @@
 
     <div class="rg_center">
         <div class="rg_form">
-            <form action="/TeacherAppointmentSystem_war_exploded/registerStudentUserServlet" name="form" id="form" method="post" >
+            <form action="/TeacherAppointmentSystem_war_exploded/StudentUser/register" name="form" id="form" method="post">
                 <table >
                     <tr>
                         <td class="td_left"><label for="username">用户名</label></td>
@@ -174,8 +194,8 @@
                     <tr>
                         <td class="td_left"><label>性别</label></td>
                         <td class="td_right">
-                            <input type="radio" name="sex" value="男" checked> 男
-                            <input type="radio" name="sex" value="女"> 女
+                            <input type="radio" name="sex" id="boy" value="男" checked> 男
+                            <input type="radio" name="sex" id="girl" value="女"> 女
                         </td>
                     </tr>
                     <tr>
@@ -205,14 +225,14 @@
                     <tr>
                         <td class="td_left"><label for="class">班级</label></td>
                         <td class="td_right">
-                            <input id="class" list="classs" name="clas" placeholder="请选择班级">
-                            <datalist id="classs">
+                            <input id="class" list="classes" name="clas" placeholder="请选择班级">
+                            <datalist id="classes">
                                 <option value="1班">
                             </datalist>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" align="center"><input type="submit" id="btn_sub" value="注册"></td>
+                        <td colspan="2" align="center"><input type="button" id="button" class="btn_sub" value="注册"></td>
                     </tr>
                 </table>
             </form>

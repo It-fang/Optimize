@@ -1,9 +1,8 @@
 package com.itfang.www.bbl.servic;
 
-import com.itfang.www.dal.po.ResultInfo;
+import com.itfang.www.dal.po.Student;
+import com.itfang.www.dal.po.StudentUser;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 /**
@@ -19,4 +18,13 @@ public interface StudentService {
      * @return resultInfo
      */
     Object checkUsername(String username) throws SQLException;
+
+    /**
+     * 注册学生账号,并将数据存入
+     * @param student
+     * @param studentUser
+     * @return resultInfo
+     * @throws SQLException
+     */
+    Object register(Student student, StudentUser studentUser) throws SQLException;
 }
