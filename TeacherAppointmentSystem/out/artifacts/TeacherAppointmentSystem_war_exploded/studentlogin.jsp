@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: 92540
+  Date: 2020/4/10
+  Time: 14:58
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -14,7 +22,6 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="js/bootstrap.min.js"></script>
-
 <style>
     body{
         background: url("img/background.jpg") no-repeat ;
@@ -32,7 +39,7 @@
     .td_text{
         position: absolute;
         top: 150px;
-        left:500px;
+        left:460px;
     }
     .td_text_password{
         position: absolute;
@@ -40,6 +47,25 @@
         left:50px;
     }
 </style>
+    <script>
+        $(function () {
+            $("#username").blur(function () {
+                let username = $(this).val();
+                $.post("StudentUser/checkUsername",{username:username},function (resultInfo) {
+                    let msg = $("#msg");
+                    if (resultInfo.status){
+                        //用户名存在
+                        msg.css("color","green");
+                        msg.html(resultInfo.message)
+                    }else {
+                        //用户名不存在
+                        msg.css("color","red");
+                        msg.html(resultInfo.message)
+                    }
+                },"json");
+            });
+        });
+    </script>
 </head>
 <body>
 <div class= "rg_layout">
@@ -49,8 +75,8 @@
                     <label for="username" class="row-cols-3 control-label">用户名:</label>
                     <div class="col-sm-2">
                         <input type="text" class="form-control " id="username" name="username" placeholder="请输入用户名">
-                        <span style="float: right;font-size: 10px" id='msg'></span>
                     </div>
+                    <span style="font-size: 10px;float: right" id='msg'></span>
                 </div><br>
                 <div class="form-group">
                     <label for="password" class="row-cols-1 control-label">密码:</label>
@@ -68,7 +94,10 @@
         <a href="teacherlogin.html" class="btn btn-info active"  role="button">教师登陆</a>
         <a href="adminlogin.html" class="btn btn-info     active" role="button">管理员登陆</a>
     </p>
-</div>
+    <c:if test="${msg != null}">
+        <span style="margin-left:70px ;background-color: yellow">${msg}</span>
+    </c:if>
 
+</div>
 </body>
 </html>
