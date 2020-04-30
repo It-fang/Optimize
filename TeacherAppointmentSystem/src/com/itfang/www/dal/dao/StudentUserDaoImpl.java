@@ -117,4 +117,31 @@ public class StudentUserDaoImpl implements StudentUserDao{
         JdbcUtil.close(preparedStatement,conn);
         return true;
     }
+
+    /**
+     *检查学生用户密码是否正确并返回学生用户对象的Id
+     * @param studentUser
+     * @return status
+     * @throws SQLException
+     */
+    @Override
+    public boolean checkPassword(StudentUser studentUser) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "select * from student_user where username = ? " ;
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1,studentUser.getUsername());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        boolean status = false;
+        while (resultSet.next()){
+            if (resultSet.getString("password").equals(studentUser.getPassword())){
+                studentUser.setStudentId(resultSet.getInt("student_id"));
+                status = true;
+            }else {
+                status = false;
+            }
+        }
+        JdbcUtil.close(resultSet,preparedStatement,conn);
+        return status;
+    }
 }

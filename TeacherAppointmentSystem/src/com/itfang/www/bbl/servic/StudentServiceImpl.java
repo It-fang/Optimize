@@ -34,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
             resultInfo.setMessage("用户名不能为空");
             return resultInfo;
         }
-        HashMap<String,String > condition = new HashMap(1);
+        HashMap condition = new HashMap(1);
         condition.put("username",username);
         boolean status = studentUserDao.isExit(condition);
         if (status){
@@ -66,17 +66,17 @@ public class StudentServiceImpl implements StudentService {
             resultInfo.setMessage("用户名和学号不能相等！");
             return resultInfo;
         }
-        HashMap condition_number = new HashMap(1);
-        condition_number.put("number",student.getNumber());
-        boolean status = studentUserDao.isExit(condition_number);
+        HashMap conditionNumber = new HashMap(1);
+        conditionNumber.put("number",student.getNumber());
+        boolean status = studentUserDao.isExit(conditionNumber);
         if (status){
             resultInfo.setStatus(false);
             resultInfo.setMessage("该学号已经被注册！");
             return resultInfo;
         }
-        HashMap condition_username = new HashMap(1);
-        condition_username.put("username",studentUser.getUsername());
-        status = studentUserDao.isExit(condition_username);
+        HashMap conditionUsername = new HashMap(1);
+        conditionUsername.put("username",studentUser.getUsername());
+        status = studentUserDao.isExit(conditionUsername);
         if (status){
             resultInfo.setStatus(false);
             resultInfo.setMessage("该用户名已经被注册！");
@@ -89,6 +89,33 @@ public class StudentServiceImpl implements StudentService {
         status = studentUserDao.saveStudentUser(studentUser);
         resultInfo.setStatus(status);
         resultInfo.setMessage("注册成功，是否跳转到登陆页面？");
+        return resultInfo;
+    }
+
+    /**
+     * 登陆学生账号
+     * @param studentUser
+     * @return resultInfo
+     * @throws SQLException
+     */
+    @Override
+    public Object login(StudentUser studentUser) throws SQLException {
+        HashMap conditionUsername = new HashMap(1);
+        conditionUsername.put("username",studentUser.getUsername());
+        boolean status = studentUserDao.isExit(conditionUsername);
+        if (status){
+            status = studentUserDao.checkPassword(studentUser);
+            if (status){
+                resultInfo.setStatus(true);
+                resultInfo.setMessage("欢迎使用," + studentUser.getUsername());
+            }else {
+                resultInfo.setStatus(false);
+                resultInfo.setMessage("密码错误，请重新输入!");
+            }
+        }else {
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("该用户不存在!");
+        }
         return resultInfo;
     }
 }

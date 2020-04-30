@@ -27,4 +27,13 @@ public interface StudentService {
      * @throws SQLException
      */
     Object register(Student student, StudentUser studentUser) throws SQLException;
+
+    /**
+     * 登陆学生账号
+     * @param studentUser
+     * @return resultInfo
+     * @throws SQLException
+     */
+    Object login(StudentUser studentUser) throws SQLException;
+
 }

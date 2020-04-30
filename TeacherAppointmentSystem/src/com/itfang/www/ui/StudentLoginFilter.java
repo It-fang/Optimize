@@ -21,12 +21,12 @@ public class StudentLoginFilter implements Filter {
         //3,判断是否跟学生用户登陆和注册相关的资源
         if (uri.contains("/studentlogin.jsp") || uri.contains("/studentregister.html") ||uri.contains("/css/*")
                 || uri.contains("/js/*") || uri.contains("/img/*") ||uri.contains("StudentUser/register")
-                || uri.contains("StudentUser/checkUsername")){
+                || uri.contains("StudentUser/checkUsername") || uri.contains("StudentUser/login")){
             chain.doFilter(req, resp);
         }else {
             //判断学生用户是否登陆
-            Object user = request.getSession().getAttribute("user");
-            if (user != null){
+            Object studentUser = request.getSession().getAttribute("studentUser");
+            if (studentUser != null){
                 chain.doFilter(req, resp);
             }else {
                 request.setAttribute("msg","您还没有登陆,请先登陆!");

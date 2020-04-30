@@ -47,36 +47,32 @@
         left:50px;
     }
 </style>
+<%--    判断登陆是否成功--%>
     <script>
         $(function () {
-            $("#username").blur(function () {
-                let username = $(this).val();
-                $.post("StudentUser/checkUsername",{username:username},function (resultInfo) {
-                    let msg = $("#msg");
+            $("#button").click(function () {
+                $.post("StudentUser/login",$("#form").serialize(),function (resultInfo) {
                     if (resultInfo.status){
-                        //用户名存在
-                        msg.css("color","green");
-                        msg.html(resultInfo.message)
+                        alert(resultInfo.message);
+                        window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp"
                     }else {
-                        //用户名不存在
-                        msg.css("color","red");
-                        msg.html(resultInfo.message)
+                        alert(resultInfo.message);
+                        window.location.href = "/TeacherAppointmentSystem_war_exploded/studentlogin.jsp"
                     }
-                },"json");
+                },"json")
             });
         });
     </script>
 </head>
 <body>
 <div class= "rg_layout">
-    <form class="form-horizontal form-inline" action="/TeacherAppointmentSystem_war_exploded/studentLoginServlet" method="post">
+    <form class="form-horizontal form-inline" id="form" action="/TeacherAppointmentSystem_war_exploded/studentLoginServlet" method="post">
             <div class="td_text">
                 <div class="form-group">
                     <label for="username" class="row-cols-3 control-label">用户名:</label>
                     <div class="col-sm-2">
                         <input type="text" class="form-control " id="username" name="username" placeholder="请输入用户名">
                     </div>
-                    <span style="font-size: 10px;float: right" id='msg'></span>
                 </div><br>
                 <div class="form-group">
                     <label for="password" class="row-cols-1 control-label">密码:</label>
@@ -85,7 +81,7 @@
                     </div>
                 </div>
             </div>
-        <input type="submit" class="btn btn-primary btn-block" style="margin-top: 150px" value="学生登陆 ">
+        <input type="button" id="button" class="btn btn-primary btn-block" style="margin-top: 150px" value="学生登陆 ">
 
     </form>
     <a href="studentregister.html" style="margin-right: 10px">学生注册</a><br><br><br>
