@@ -119,7 +119,7 @@ public class StudentUserDaoImpl implements StudentUserDao{
     }
 
     /**
-     *检查学生用户密码是否正确并返回学生用户对象的Id
+     *检查学生用户密码是否正确
      * @param studentUser
      * @return status
      * @throws SQLException

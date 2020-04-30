@@ -100,6 +100,15 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public Object login(StudentUser studentUser) throws SQLException {
+        if ("".equals(studentUser.getUsername())){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("用户名不能为空!");
+            return resultInfo;
+        }else if ("".equals(studentUser.getPassword())){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("密码不能为空!");
+            return resultInfo;
+        }
         HashMap conditionUsername = new HashMap(1);
         conditionUsername.put("username",studentUser.getUsername());
         boolean status = studentUserDao.isExit(conditionUsername);
