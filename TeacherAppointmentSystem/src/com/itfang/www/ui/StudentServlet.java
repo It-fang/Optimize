@@ -105,6 +105,15 @@ public class StudentServlet extends BaseServlet {
         return resultInfo;
     }
 
+    /**
+     * 分页查询所有教师信息
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
     public Object queryTeacher(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");

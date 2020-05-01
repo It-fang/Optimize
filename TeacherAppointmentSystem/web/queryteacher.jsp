@@ -145,7 +145,7 @@
                 <td>${teacher.major}</td>
                 <td>${teacher.clas}</td>
                 <td>${teacher.freeTime}</td>
-                <td><a href="/TeacherAppointmentSystem_war_exploded/applicationServlet?id=${teacher.id}&name=${teacher.name}&studentId=${studentUser.studentId}" class="btn btn-primary btn-sm active" role="button">预约</a></td>
+                <td><a href="/TeacherAppointmentSystem_war_exploded/applicationServlet?id=${teacher.id}&name=${teacher.name}" class="btn btn-primary btn-sm active" role="button">预约</a></td>
             </tr>
         </c:forEach>
     </table>
