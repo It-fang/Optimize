@@ -1,9 +1,6 @@
 package com.itfang.www.bbl.servic;
 
-import com.itfang.www.dal.dao.PageDao;
-import com.itfang.www.dal.dao.PageDaoImpl;
-import com.itfang.www.dal.dao.StudentUserDao;
-import com.itfang.www.dal.dao.StudentUserDaoImpl;
+import com.itfang.www.dal.dao.*;
 import com.itfang.www.dal.po.*;
 
 import java.sql.SQLException;
@@ -164,5 +161,25 @@ public class StudentServiceImpl implements StudentService {
         List<Teacher> list =  pageDao.listTeacherByPage(start,rows,condition);
         page.setList(list);
         return page;
+    }
+
+    /**
+     * 判断预约请求信息是否完整,并存入数据库中
+     * @param application
+     * @return resultInfo
+     * @throws SQLException
+     */
+    @Override
+    public Object apply(Application application) throws SQLException {
+        if ("".equals(application.getTeacherId()) || "".equals(application.getTeacherName()) || "".equals(application.getStudentName()) || "".equals(application.getStudentNumber()) || "".equals(application.getStudentId()) || "".equals(application.getApplyTime())){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("请将预约信息填完整！");
+            return resultInfo;
+        }
+        ApplicationDao applicationDao = new ApplicationDaoImpl();
+        boolean status = applicationDao.saveApplication(application);
+        resultInfo.setStatus(status);
+        resultInfo.setMessage("预约请求发送成功,等待教师处理!");
+        return resultInfo;
     }
 }

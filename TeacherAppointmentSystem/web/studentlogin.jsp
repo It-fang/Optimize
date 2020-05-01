@@ -15,7 +15,6 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Teacher Appointment System</title>
     <script src="js/jquery-3.4.1.js"></script>
-    <script src="js/jquery.form.js"></script>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -59,7 +58,8 @@
                         alert(resultInfo.message);
                         window.location.href = "/TeacherAppointmentSystem_war_exploded/studentlogin.jsp"
                     }
-                },"json")
+                },"json");
+
             });
         });
     </script>

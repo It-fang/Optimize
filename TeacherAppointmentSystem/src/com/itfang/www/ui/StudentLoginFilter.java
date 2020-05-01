@@ -20,7 +20,7 @@ public class StudentLoginFilter implements Filter {
         String uri = request.getRequestURI();
         //3,判断是否跟学生用户登陆和注册相关的资源
         if (uri.contains("/studentlogin.jsp") || uri.contains("/studentregister.html") ||uri.contains("/css/*")
-                || uri.contains("/js/*") || uri.contains("/img/*") ||uri.contains("StudentUser/register")
+                || uri.contains("/js/*") || uri.contains("/img/background.jpg") ||uri.contains("StudentUser/register")
                 || uri.contains("StudentUser/checkUsername") || uri.contains("StudentUser/login")){
             chain.doFilter(req, resp);
         }else {

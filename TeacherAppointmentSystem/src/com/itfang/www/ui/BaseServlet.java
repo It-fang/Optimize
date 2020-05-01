@@ -40,12 +40,17 @@ public class BaseServlet extends HttpServlet {
                 request.getRequestDispatcher("/queryteacher.jsp").forward(request,response);
                 return;
             }
+            if (requestName.contains("toApply")){
+                response.sendRedirect("/TeacherAppointmentSystem_war_exploded/application.jsp");
+                return;
+            }
             ObjectMapper objectMapper = new ObjectMapper();
             // 设置编码格式
             response.setContentType("application/json;charset=utf-8");
             // 将数据传回客户端
             objectMapper.writeValue( response.getOutputStream(), invokeResponse);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
             request.getRequestDispatcher("/queryteacher.jsp").forward(request,response);
         }
     }

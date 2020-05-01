@@ -13,6 +13,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 @WebServlet("/StudentUser/*")
@@ -134,6 +137,64 @@ public class StudentServlet extends BaseServlet {
         request.setAttribute("page",page);
         request.setAttribute("condition",condition);
         ResultInfo resultInfo = new ResultInfo();
+        return resultInfo;
+    }
+
+    /**
+     * 跳转到申请表页面
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
+    public Object toApply(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取请求参数
+        String teacherId = request.getParameter("id");
+        String teacherName = request.getParameter("name");
+        //3,将参数存入session域中
+        request.getSession().setAttribute("teacherId",teacherId);
+        request.getSession().setAttribute("teacherName",teacherName);
+        return null;
+    }
+
+    /**
+     * 接收预约请求
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     * @throws ParseException
+     */
+    public Object apply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取请求参数
+        String _teacherId = (String) request.getSession().getAttribute("teacherId");
+        int teacherId = Integer.parseInt(_teacherId);
+        String teacherName = (String) request.getSession().getAttribute("teacherName");
+        StudentUser studentUser = (StudentUser) request.getSession().getAttribute("studentUser");
+        int studentId = studentUser.getStudentId();
+        String studentName = request.getParameter("name");
+        String studentNumber = request.getParameter("number");
+        String _applyTime = request.getParameter("time");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date applyTime = simpleDateFormat.parse(_applyTime);
+        //3,封装申请表对象
+        Application application = new Application();
+        application.setTeacherId(teacherId);
+        application.setTeacherName(teacherName);
+        application.setStudentId(studentId);
+        application.setStudentName(studentName);
+        application.setStudentNumber(studentNumber);
+        application.setApplyTime(applyTime);
+        //4,传入参数
+        Object resultInfo = studentService.apply(application);
         return resultInfo;
     }
 }

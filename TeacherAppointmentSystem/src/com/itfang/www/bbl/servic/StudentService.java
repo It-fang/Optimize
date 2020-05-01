@@ -1,9 +1,6 @@
 package com.itfang.www.bbl.servic;
 
-import com.itfang.www.dal.po.Page;
-import com.itfang.www.dal.po.Student;
-import com.itfang.www.dal.po.StudentUser;
-import com.itfang.www.dal.po.Teacher;
+import com.itfang.www.dal.po.*;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -49,4 +46,11 @@ public interface StudentService {
      */
     Page<Teacher> queryTeacher(String _currentPage, String _rows, Map<String, String[]> condition) throws SQLException;
 
+    /**
+     * 判断预约请求信息是否完整,并存入数据库中
+     * @param application
+     * @return resultInfo
+     * @throws SQLException
+     */
+    Object apply(Application application) throws SQLException;
 }

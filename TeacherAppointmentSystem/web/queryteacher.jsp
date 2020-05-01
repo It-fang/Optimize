@@ -15,7 +15,6 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Teacher Appointment System</title>
     <script src="js/jquery-3.4.1.js"></script>
-    <script src="js/jquery.form.js"></script>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -28,84 +27,6 @@
         }
     </style>
 </head>
-<%--加载完页面后自动查询所有老师信息--%>
-<%--<script>--%>
-<%--    $(function () {--%>
-<%--        $("#showTeacher").click(function () {--%>
-<%--            $.post("StudentUser/queryTeacher",{currentPage:1,rows:5},function (page) {--%>
-<%--                if (page == null){--%>
-<%--                    alert("查询失败!");--%>
-<%--                }else {--%>
-<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
-<%--                }--%>
-<%--            },"json");--%>
-<%--        });--%>
-<%--        $("#search").click(function () {--%>
-<%--            $.post("StudentUser/queryTeacher",$("#form").serialize(),function (page) {--%>
-<%--                if (page == null){--%>
-<%--                    alert("查询失败!");--%>
-<%--                }else {--%>
-<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
-<%--                }--%>
-<%--            },"json");--%>
-<%--        });--%>
-<%--        $("#pre1").click(function () {--%>
-<%--            $.post($("#pre1").attr("href"),function (page) {--%>
-<%--                if (page == null){--%>
-<%--                    alert("查询失败!");--%>
-<%--                }else {--%>
-<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
-<%--                }--%>
-<%--            },"json");--%>
-<%--        });--%>
-<%--        $("#pre2").click(function () {--%>
-<%--            $.post($("#pre2").attr("href"),function (page) {--%>
-<%--                if (page == null){--%>
-<%--                    alert("查询失败!");--%>
-<%--                }else {--%>
-<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
-<%--                }--%>
-<%--            },"json");--%>
-<%--        });--%>
-<%--        $("#pre3").click(function () {--%>
-<%--            $.post($("#pre3").attr("href"),function (page) {--%>
-<%--                if (page == null){--%>
-<%--                    alert("查询失败!");--%>
-<%--                }else {--%>
-<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
-<%--                }--%>
-<%--            },"json");--%>
-<%--        });--%>
-<%--        $("#pre4").click(function () {--%>
-<%--            $.post($("#pre4").attr("href"),function (page) {--%>
-<%--                if (page == null){--%>
-<%--                    alert("查询失败!");--%>
-<%--                }else {--%>
-<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
-<%--                }--%>
-<%--            },"json");--%>
-<%--        });--%>
-<%--        $("#pre5").click(function () {--%>
-<%--            $.post($("#pre5").attr("href"),function (page) {--%>
-<%--                if (page == null){--%>
-<%--                    alert("查询失败!");--%>
-<%--                }else {--%>
-<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
-<%--                }--%>
-<%--            },"json");--%>
-<%--        });--%>
-<%--        $("#pre6").click(function () {--%>
-<%--            $.post($("#pre6").attr("href"),function (page) {--%>
-<%--                if (page == null){--%>
-<%--                    alert("查询失败!");--%>
-<%--                }else {--%>
-<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
-<%--                }--%>
-<%--            },"json");--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
-
 <body>
 <div class="container">
     <h3><p class="text-center">教师信息列表</p></h3>
@@ -145,7 +66,7 @@
                 <td>${teacher.major}</td>
                 <td>${teacher.clas}</td>
                 <td>${teacher.freeTime}</td>
-                <td><a href="/TeacherAppointmentSystem_war_exploded/applicationServlet?id=${teacher.id}&name=${teacher.name}" class="btn btn-primary btn-sm active" role="button">预约</a></td>
+                <td><a href="/TeacherAppointmentSystem_war_exploded/StudentUser/toApply?id=${teacher.id}&name=${teacher.name}" class="btn btn-primary btn-sm active" role="button">预约</a></td>
             </tr>
         </c:forEach>
     </table>
