@@ -1,13 +1,14 @@
 package com.itfang.www.bbl.servic;
 
+import com.itfang.www.dal.dao.PageDao;
+import com.itfang.www.dal.dao.PageDaoImpl;
 import com.itfang.www.dal.dao.StudentUserDao;
 import com.itfang.www.dal.dao.StudentUserDaoImpl;
-import com.itfang.www.dal.po.ResultInfo;
-import com.itfang.www.dal.po.Student;
-import com.itfang.www.dal.po.StudentUser;
+import com.itfang.www.dal.po.*;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -126,5 +127,42 @@ public class StudentServiceImpl implements StudentService {
             resultInfo.setMessage("该用户不存在!");
         }
         return resultInfo;
+    }
+
+    /**
+     * 查询所有老师信息
+     * @param _currentPage
+     * @param _rows
+     * @param condition
+     * @return page
+     * @throws SQLException
+     */
+    @Override
+    public Page<Teacher> queryTeacher(String _currentPage, String _rows, Map<String, String[]> condition) throws SQLException {
+        //1,创建Page对象
+        Page<Teacher> page = new Page<>();
+        //2,设置参数
+        int currentPage = Integer.parseInt(_currentPage);
+        int rows = Integer.parseInt(_rows);
+        if(currentPage <= 0){
+            currentPage = 1;
+        }
+        //3,调用Dao查询totalCount
+        PageDao pageDao = new PageDaoImpl();
+        int totalCount = pageDao.findTotalCount(condition);
+        page.setTotalCount(totalCount);
+        //4,计算总页码
+        int totalPage = totalCount % rows == 0 ? totalCount/rows : totalCount/rows + 1;
+        if (currentPage >= totalPage){
+            currentPage = totalPage;
+        }
+        page.setCurrentPage(currentPage);
+        page.setRows(rows);
+        page.setTotalPage(totalPage);
+        //5,调用Dao查询List集合
+        int start = (currentPage - 1)*rows;
+        List<Teacher> list =  pageDao.listTeacherByPage(start,rows,condition);
+        page.setList(list);
+        return page;
     }
 }

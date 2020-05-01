@@ -36,13 +36,17 @@ public class BaseServlet extends HttpServlet {
             Method method = this.getClass().getMethod(requestName , HttpServletRequest.class , HttpServletResponse.class);
             // 执行这个方法
             Object invokeResponse = method.invoke(this, request, response);
+            if(requestName.contains("queryTeacher")){
+                request.getRequestDispatcher("/queryteacher.jsp").forward(request,response);
+                return;
+            }
             ObjectMapper objectMapper = new ObjectMapper();
             // 设置编码格式
             response.setContentType("application/json;charset=utf-8");
             // 将数据传回客户端
             objectMapper.writeValue( response.getOutputStream(), invokeResponse);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+            request.getRequestDispatcher("/queryteacher.jsp").forward(request,response);
         }
     }
 }

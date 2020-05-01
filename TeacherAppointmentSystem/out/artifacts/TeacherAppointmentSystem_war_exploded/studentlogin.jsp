@@ -39,7 +39,7 @@
     .td_text{
         position: absolute;
         top: 150px;
-        left:460px;
+        left:500px;
     }
     .td_text_password{
         position: absolute;

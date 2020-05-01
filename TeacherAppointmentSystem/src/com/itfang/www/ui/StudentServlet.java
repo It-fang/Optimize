@@ -2,8 +2,7 @@ package com.itfang.www.ui;
 
 import com.itfang.www.bbl.servic.StudentService;
 import com.itfang.www.bbl.servic.StudentServiceImpl;
-import com.itfang.www.dal.po.Student;
-import com.itfang.www.dal.po.StudentUser;
+import com.itfang.www.dal.po.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.Map;
 
 @WebServlet("/StudentUser/*")
 /**
@@ -102,6 +102,29 @@ public class StudentServlet extends BaseServlet {
         //5,将用户存入Session域中
         HttpSession session = request.getSession();
         session.setAttribute("studentUser",studentUser);
+        return resultInfo;
+    }
+
+    public Object queryTeacher(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取参数
+        String currentPage = request.getParameter("currentPage");
+        String rows = request.getParameter("rows");
+        if(currentPage == null || "".equals(currentPage)){
+            currentPage = "1";
+        }
+        if(rows == null || "".equals(rows)){
+            rows = "5";
+        }
+        //获取查询条件参数
+        Map<String, String[]> condition = request.getParameterMap();
+        Page<Teacher> page = null;
+        page = studentService.queryTeacher(currentPage,rows,condition);
+        //3,将获取结果存入request域中
+        request.setAttribute("page",page);
+        request.setAttribute("condition",condition);
+        ResultInfo resultInfo = new ResultInfo();
         return resultInfo;
     }
 }

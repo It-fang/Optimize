@@ -1,6 +1,7 @@
 package com.itfang.www.dal.po;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author it-fang
@@ -13,6 +14,8 @@ public class Page<T> {
     private List<T> list;
     private int currentPage;
     private int rows;
+
+
 
     public int getTotalCount() {
         return totalCount;
@@ -56,7 +59,7 @@ public class Page<T> {
 
     @Override
     public String toString() {
-        return "PageBy{" +
+        return "Page{" +
                 "totalCount=" + totalCount +
                 ", totalPage=" + totalPage +
                 ", list=" + list +

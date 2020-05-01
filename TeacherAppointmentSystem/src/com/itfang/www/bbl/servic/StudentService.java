@@ -1,9 +1,12 @@
 package com.itfang.www.bbl.servic;
 
+import com.itfang.www.dal.po.Page;
 import com.itfang.www.dal.po.Student;
 import com.itfang.www.dal.po.StudentUser;
+import com.itfang.www.dal.po.Teacher;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * @author it-fang
@@ -35,5 +38,15 @@ public interface StudentService {
      * @throws SQLException
      */
     Object login(StudentUser studentUser) throws SQLException;
+
+    /**
+     * 查询所有老师信息
+     * @param _currentPage
+     * @param _rows
+     * @param condition
+     * @return page
+     * @throws SQLException
+     */
+    Page<Teacher> queryTeacher(String _currentPage, String _rows, Map<String, String[]> condition) throws SQLException;
 
 }

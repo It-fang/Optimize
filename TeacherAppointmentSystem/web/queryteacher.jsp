@@ -14,7 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Teacher Appointment System</title>
-
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery.form.js"></script>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -27,11 +28,88 @@
         }
     </style>
 </head>
+<%--加载完页面后自动查询所有老师信息--%>
+<%--<script>--%>
+<%--    $(function () {--%>
+<%--        $("#showTeacher").click(function () {--%>
+<%--            $.post("StudentUser/queryTeacher",{currentPage:1,rows:5},function (page) {--%>
+<%--                if (page == null){--%>
+<%--                    alert("查询失败!");--%>
+<%--                }else {--%>
+<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
+<%--                }--%>
+<%--            },"json");--%>
+<%--        });--%>
+<%--        $("#search").click(function () {--%>
+<%--            $.post("StudentUser/queryTeacher",$("#form").serialize(),function (page) {--%>
+<%--                if (page == null){--%>
+<%--                    alert("查询失败!");--%>
+<%--                }else {--%>
+<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
+<%--                }--%>
+<%--            },"json");--%>
+<%--        });--%>
+<%--        $("#pre1").click(function () {--%>
+<%--            $.post($("#pre1").attr("href"),function (page) {--%>
+<%--                if (page == null){--%>
+<%--                    alert("查询失败!");--%>
+<%--                }else {--%>
+<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
+<%--                }--%>
+<%--            },"json");--%>
+<%--        });--%>
+<%--        $("#pre2").click(function () {--%>
+<%--            $.post($("#pre2").attr("href"),function (page) {--%>
+<%--                if (page == null){--%>
+<%--                    alert("查询失败!");--%>
+<%--                }else {--%>
+<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
+<%--                }--%>
+<%--            },"json");--%>
+<%--        });--%>
+<%--        $("#pre3").click(function () {--%>
+<%--            $.post($("#pre3").attr("href"),function (page) {--%>
+<%--                if (page == null){--%>
+<%--                    alert("查询失败!");--%>
+<%--                }else {--%>
+<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
+<%--                }--%>
+<%--            },"json");--%>
+<%--        });--%>
+<%--        $("#pre4").click(function () {--%>
+<%--            $.post($("#pre4").attr("href"),function (page) {--%>
+<%--                if (page == null){--%>
+<%--                    alert("查询失败!");--%>
+<%--                }else {--%>
+<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
+<%--                }--%>
+<%--            },"json");--%>
+<%--        });--%>
+<%--        $("#pre5").click(function () {--%>
+<%--            $.post($("#pre5").attr("href"),function (page) {--%>
+<%--                if (page == null){--%>
+<%--                    alert("查询失败!");--%>
+<%--                }else {--%>
+<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
+<%--                }--%>
+<%--            },"json");--%>
+<%--        });--%>
+<%--        $("#pre6").click(function () {--%>
+<%--            $.post($("#pre6").attr("href"),function (page) {--%>
+<%--                if (page == null){--%>
+<%--                    alert("查询失败!");--%>
+<%--                }else {--%>
+<%--                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp";--%>
+<%--                }--%>
+<%--            },"json");--%>
+<%--        });--%>
+<%--    });--%>
+<%--</script>--%>
 
 <body>
 <div class="container">
     <h3><p class="text-center">教师信息列表</p></h3>
-    <form class="form-inline" action="/TeacherAppointmentSystem_war_exploded/queryTeacherByPageServlet?studentId=${studentUser.studentId}" method="post">
+    <form class="form-inline" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher" id="form" method="post">
         <div class="form-group">
             <label for="name">姓名</label>
             <input type="text" class="form-control" id="name" name="name" value="${condition.name[0]}" placeholder="请输入教师的名字">
@@ -40,9 +118,9 @@
             <label for="college">学院</label>
             <input type="text" class="form-control" id="college" name="college" value="${condition.college[0]}" placeholder="请输入教师所属学院">
         </div>
-        <input type="submit" class="btn btn-primary btn-sm" value="搜索 ">
+        <input type="submit" class="btn btn-primary btn-sm" id="search" value="搜索 ">
         <div style="float:right; margin: 5px;">
-            <a class="btn btn-success" href="/TeacherAppointmentSystem_war_exploded/queryTeacherByPageServlet?currentPage=1&rows=5&studentId=${studentUser.studentId}" role="button">显示所有教师信息</a>
+            <a class="btn btn-success" id="showTeacher" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher" role="button">显示所有教师信息</a>
         </div>
         <div style="float:right; margin: 5px;">
             <a class="btn  btn-success" href="/TeacherAppointmentSystem_war_exploded/queryResultServlet?studentId=${studentUser.studentId}" role="button">显示所有预约结果</a>
@@ -58,6 +136,7 @@
             <th>空闲时间</th>
             <th>预约教师</th>
         </tr>
+        <%--@elvariable id="page" --%>
         <c:forEach items="${page.list}" var="teacher" varStatus="s">
             <tr>
                 <td>${s.count}</td>
@@ -65,7 +144,7 @@
                 <td>${teacher.college}</td>
                 <td>${teacher.major}</td>
                 <td>${teacher.clas}</td>
-                <td>${teacher.freetime}</td>
+                <td>${teacher.freeTime}</td>
                 <td><a href="/TeacherAppointmentSystem_war_exploded/applicationServlet?id=${teacher.id}&name=${teacher.name}&studentId=${studentUser.studentId}" class="btn btn-primary btn-sm active" role="button">预约</a></td>
             </tr>
         </c:forEach>
@@ -75,36 +154,36 @@
             <ul class="pagination pagination-lg">
                 <c:if test="${page.currentPage == 1}">
                     <li class="disabled">
-                        <a href="/TeacherAppointmentSystem_war_exploded/queryTeacherByPageServlet?currentPage=${page.currentPage}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}&studentId=${studentUser.studentId}" aria-label="Previous">
+                        <a id="pre1" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher?currentPage=${page.currentPage}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${page.currentPage != 1}">
                     <li>
-                        <a href="/TeacherAppointmentSystem_war_exploded/queryTeacherByPageServlet?currentPage=${page.currentPage - 1}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}&studentId=${studentUser.studentId}" aria-label="Previous">
+                        <a id="pre2" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher?currentPage=${page.currentPage - 1}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                 </c:if>
                 <c:forEach begin="1" end="${page.totalPage}" var="i">
                     <c:if test="${page.currentPage == i}">
-                         <li class="active"><a href="/TeacherAppointmentSystem_war_exploded/queryTeacherByPageServlet?currentPage=${i}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}&studentId=${studentUser.studentId}">${i}</a></li>
+                         <li class="active"><a id="pre3" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher?currentPage=${i}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}">${i}</a></li>
                     </c:if>
                     <c:if test="${page.currentPage!= i}">
-                         <li><a href="/TeacherAppointmentSystem_war_exploded/queryTeacherByPageServlet?currentPage=${i}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}&studentId=${studentUser.studentId}">${i}</a></li>
+                         <li><a id="pre4" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher?currentPage=${i}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}">${i}</a></li>
                     </c:if>
                 </c:forEach>
                 <c:if test="${page.currentPage == page.totalPage}">
                     <li class="disabled">
-                        <a href="/TeacherAppointmentSystem_war_exploded/queryTeacherByPageServlet?currentPage=${page.currentPage}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}&studentId=${studentUser.studentId}" aria-label="Next">
+                        <a  id="pre5" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher?currentPage=${page.currentPage}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </c:if>
                 <c:if test="${page.currentPage != page.totalPage}">
                     <li>
-                        <a href="/TeacherAppointmentSystem_war_exploded/queryTeacherByPageServlet?currentPage=${page.currentPage + 1}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}&studentId=${studentUser.studentId}" aria-label="Next">
+                        <a id="pre6" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher?currentPage=${page.currentPage + 1}&rows=5&name=${condition.name[0]}&college=${condition.college[0]}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
