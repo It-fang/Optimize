@@ -24,7 +24,6 @@ public class TeacherServiceImpl implements TeacherService {
      * @return
      * @throws SQLException
      */
-
     @Override
     public Object checkUsername(String username) throws SQLException {
         //判断提交的用户名是否为空
@@ -46,6 +45,13 @@ public class TeacherServiceImpl implements TeacherService {
         return resultInfo;
     }
 
+    /**
+     * 注册教师账号
+     * @param teacher
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object register(Teacher teacher, TeacherUser teacherUser) throws SQLException {
         if ("".equals(teacherUser.getUsername()) || "".equals(teacherUser.getPassword()) || "".equals(teacher.getName()) || "".equals(teacher.getCollege()) || "".equals(teacher.getMajor()) || "".equals(teacher.getClas())){
@@ -76,6 +82,36 @@ public class TeacherServiceImpl implements TeacherService {
         status = teacherUserDao.saveTeacherUser(teacherUser);
         resultInfo.setStatus(status);
         resultInfo.setMessage("注册成功，是否跳转到登陆页面？");
+        return resultInfo;
+    }
+
+    @Override
+    public Object login(TeacherUser teacherUser) throws SQLException {
+        if ("".equals(teacherUser.getUsername())){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("用户名不能为空!");
+            return resultInfo;
+        }else if ("".equals(teacherUser.getPassword())){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("密码不能为空!");
+            return resultInfo;
+        }
+        HashMap conditionUsername = new HashMap(1);
+        conditionUsername.put("username",teacherUser.getUsername());
+        boolean status = teacherUserDao.isExit(conditionUsername);
+        if (status){
+            status = teacherUserDao.checkPassword(teacherUser);
+            if (status){
+                resultInfo.setStatus(true);
+                resultInfo.setMessage("欢迎使用," + teacherUser.getUsername());
+            }else {
+                resultInfo.setStatus(false);
+                resultInfo.setMessage("密码错误，请重新输入!");
+            }
+        }else {
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("该用户不存在!");
+        }
         return resultInfo;
     }
 }

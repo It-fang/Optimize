@@ -20,9 +20,28 @@ public interface TeacherUserDao {
      */
     boolean isExit(HashMap condition) throws SQLException;
 
+    /**
+     * 将教师对象存入数据库中
+     * @param teacher
+     * @throws SQLException
+     */
     void saveTeacher(Teacher teacher) throws SQLException;
 
+    /**
+     * 通过教师工号获得教师Id
+     * @param number
+     * @return
+     * @throws SQLException
+     */
     int getId(String number) throws SQLException;
 
+    /**
+     * 将教师用户对象存入数据库中
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
     boolean saveTeacherUser(TeacherUser teacherUser) throws SQLException;
+
+    boolean checkPassword(TeacherUser teacherUser) throws SQLException;
 }

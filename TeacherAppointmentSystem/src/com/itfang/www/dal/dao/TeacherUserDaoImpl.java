@@ -52,6 +52,11 @@ public class TeacherUserDaoImpl implements TeacherUserDao {
         return status;
     }
 
+    /**
+     * 将教师对象存入数据库中
+     * @param teacher
+     * @throws SQLException
+     */
     @Override
     public void saveTeacher(Teacher teacher) throws SQLException {
         Connection conn = JdbcUtil.getConnection();
@@ -69,6 +74,12 @@ public class TeacherUserDaoImpl implements TeacherUserDao {
         JdbcUtil.close(preparedStatement,conn);
     }
 
+    /**
+     * 通过教师工号获得教师Id
+     * @param number
+     * @return
+     * @throws SQLException
+     */
     @Override
     public int getId(String number) throws SQLException {
         Connection conn = JdbcUtil.getConnection();
@@ -85,6 +96,12 @@ public class TeacherUserDaoImpl implements TeacherUserDao {
         return studentId;
     }
 
+    /**
+     * 将教师用户对象存入数据库中
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
     @Override
     public boolean saveTeacherUser(TeacherUser teacherUser) throws SQLException {
         Connection conn = JdbcUtil.getConnection();
@@ -100,4 +117,26 @@ public class TeacherUserDaoImpl implements TeacherUserDao {
         JdbcUtil.close(preparedStatement,conn);
         return true;
     }
+
+    @Override
+    public boolean checkPassword(TeacherUser teacherUser) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "select * from teacher_user where username = ? " ;
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1,teacherUser.getUsername());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        boolean status = false;
+        while (resultSet.next()){
+            if (resultSet.getString("password").equals(teacherUser.getPassword())){
+                teacherUser.setTeacherId(resultSet.getInt("teacher_id"));
+                status = true;
+            }else {
+                status = false;
+            }
+        }
+        JdbcUtil.close(resultSet,preparedStatement,conn);
+        return status;
+    }
+
 }

@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -44,6 +45,15 @@ public class TeacherUserServlet extends BaseServlet {
         return resultInfo;
     }
 
+    /**
+     * 注册教师账号
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
     public Object register(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");
@@ -70,4 +80,23 @@ public class TeacherUserServlet extends BaseServlet {
         Object resultInfo = teacherService.register(teacher,teacherUser);
         return resultInfo;
     }
+
+    public Object login(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取参数
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        //3,封装studentUser对象
+        TeacherUser teacherUser = new TeacherUser();
+        teacherUser.setUsername(username);
+        teacherUser.setPassword(password);
+        //4,传入参数
+        Object resultInfo = teacherService.login(teacherUser);
+        //5,将用户存入Session域中
+        HttpSession session = request.getSession();
+        session.setAttribute("teacherUser",teacherUser);
+        return resultInfo;
+    }
+
 }
