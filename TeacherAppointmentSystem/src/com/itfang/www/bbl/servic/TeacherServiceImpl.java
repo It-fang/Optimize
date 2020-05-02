@@ -85,6 +85,12 @@ public class TeacherServiceImpl implements TeacherService {
         return resultInfo;
     }
 
+    /**
+     * 教师用户登陆
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object login(TeacherUser teacherUser) throws SQLException {
         if ("".equals(teacherUser.getUsername())){

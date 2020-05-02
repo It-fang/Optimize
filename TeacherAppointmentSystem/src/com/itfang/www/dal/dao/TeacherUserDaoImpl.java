@@ -118,6 +118,12 @@ public class TeacherUserDaoImpl implements TeacherUserDao {
         return true;
     }
 
+    /**
+     * 检查密码是否正确
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
     @Override
     public boolean checkPassword(TeacherUser teacherUser) throws SQLException {
         Connection conn = JdbcUtil.getConnection();

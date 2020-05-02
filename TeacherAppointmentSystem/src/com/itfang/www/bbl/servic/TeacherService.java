@@ -29,5 +29,11 @@ public interface TeacherService {
      */
     Object register(Teacher teacher, TeacherUser teacherUser) throws SQLException;
 
+    /**
+     * 教师用户登陆
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
     Object login(TeacherUser teacherUser) throws SQLException;
 }

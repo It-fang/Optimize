@@ -43,5 +43,11 @@ public interface TeacherUserDao {
      */
     boolean saveTeacherUser(TeacherUser teacherUser) throws SQLException;
 
+    /**
+     * 检查密码是否正确
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
     boolean checkPassword(TeacherUser teacherUser) throws SQLException;
 }

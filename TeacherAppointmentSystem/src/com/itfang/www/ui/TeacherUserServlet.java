@@ -81,6 +81,15 @@ public class TeacherUserServlet extends BaseServlet {
         return resultInfo;
     }
 
+    /**
+     * 教师用户登陆
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
     public Object login(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");
