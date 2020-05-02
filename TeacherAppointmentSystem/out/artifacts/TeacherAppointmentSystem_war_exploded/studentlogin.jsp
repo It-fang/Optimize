@@ -53,7 +53,7 @@
                 $.post("StudentUser/login",$("#form").serialize(),function (resultInfo) {
                     if (resultInfo.status){
                         alert(resultInfo.message);
-                        window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp"
+                        window.location.href = "/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher"
                     }else {
                         alert(resultInfo.message);
                         window.location.href = "/TeacherAppointmentSystem_war_exploded/studentlogin.jsp"

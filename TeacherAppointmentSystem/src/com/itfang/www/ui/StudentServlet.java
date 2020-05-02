@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet("/StudentUser/*")
@@ -165,7 +166,7 @@ public class StudentServlet extends BaseServlet {
      * 接收预约请求
      * @param request
      * @param response
-     * @return
+     * @return resultInfo
      * @throws ServletException
      * @throws IOException
      * @throws SQLException
@@ -195,6 +196,17 @@ public class StudentServlet extends BaseServlet {
         application.setApplyTime(applyTime);
         //4,传入参数
         Object resultInfo = studentService.apply(application);
+        return resultInfo;
+    }
+    public Object queryResult(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取请求参数
+        StudentUser studentUser = (StudentUser) request.getSession().getAttribute("studentUser");
+        int studentId = studentUser.getStudentId();
+        //3,传入参数
+        ResultInfo resultInfo = (ResultInfo) studentService.queryResult(studentId);
+        request.getSession().setAttribute("applications",(List<Application>)resultInfo.getData());
         return resultInfo;
     }
 }

@@ -4,10 +4,7 @@ import com.itfang.www.dal.dao.*;
 import com.itfang.www.dal.po.*;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author it-fang
@@ -180,6 +177,20 @@ public class StudentServiceImpl implements StudentService {
         boolean status = applicationDao.saveApplication(application);
         resultInfo.setStatus(status);
         resultInfo.setMessage("预约请求发送成功,等待教师处理!");
+        return resultInfo;
+    }
+
+    @Override
+    public Object queryResult(int studentId) throws SQLException {
+        ApplicationDao applicationDao = new ApplicationDaoImpl();
+        List<Application> applications = applicationDao.listResult(studentId);
+        if (applications == null){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("没有任务预约申请!");
+        }else {
+            resultInfo.setStatus(true);
+            resultInfo.setData(applications);
+        }
         return resultInfo;
     }
 }

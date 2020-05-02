@@ -26,35 +26,20 @@
 <script>
     $(function () {
         $("#submit").click(function () {
-            alert($("#form").serialize());
             $.post("StudentUser/apply",$("#form").serialize(),function (resultInfo) {
-                alert("adf");
                 if (resultInfo.status){
                     alert(resultInfo.message);
-                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryteacher.jsp"
+                    window.location.href = "/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher";
                 }else {
                     alert(resultInfo.message);
-                    window.location.href = "/TeacherAppointmentSystem_war_exploded/application.jsp"
+                    window.location.href = "/TeacherAppointmentSystem_war_exploded/application.jsp";
                 }
             },"json");
-            // $.ajax({
-            //     url:"StudentUser/apply",
-            //     type:"post",
-            //     async:true,
-            //     dataType:"text",
-            //     contentType: "application/json; charset=utf-8",
-            //     data:$("#form").serialize(),
-            //     success:function (resultInfo) {
-            //         alert("resultInfo.message");
-            //     },
-            //     error:function (resultInfo) {
-            //       alert("操作错误");
-            //     }
-            // })
         });
     });
 </script>
 <body>
+    <a href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher" class="btn btn-primary active" role="button">返回</a>
     <form id="form" action="/TeacherAppointmentSystem_war_exploded/submitApplyServlet?teacherId=${teacherId}&studentId=${studentId}" method="post">
         <div class="form-group col-xl-3">
             <label>教师姓名</label>

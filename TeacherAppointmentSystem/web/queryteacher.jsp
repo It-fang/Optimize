@@ -44,7 +44,7 @@
             <a class="btn btn-success" id="showTeacher" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher" role="button">显示所有教师信息</a>
         </div>
         <div style="float:right; margin: 5px;">
-            <a class="btn  btn-success" href="/TeacherAppointmentSystem_war_exploded/queryResultServlet?studentId=${studentUser.studentId}" role="button">显示所有预约结果</a>
+            <a class="btn  btn-success" href="/TeacherAppointmentSystem_war_exploded/queryresult.jsp" role="button">显示所有预约结果</a>
         </div>
     </form>
     <table border="1" class="table table-bordered table-hover">

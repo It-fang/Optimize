@@ -53,4 +53,6 @@ public interface StudentService {
      * @throws SQLException
      */
     Object apply(Application application) throws SQLException;
+
+    Object queryResult(int studentId) throws SQLException;
 }

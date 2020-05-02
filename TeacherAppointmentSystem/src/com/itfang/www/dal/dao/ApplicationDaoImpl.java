@@ -3,10 +3,9 @@ package com.itfang.www.dal.dao;
 import com.itfang.www.dal.po.Application;
 import com.itfang.www.util.JdbcUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Date;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author it-fang
@@ -36,5 +35,32 @@ public class ApplicationDaoImpl implements ApplicationDao{
         preparedStatement.execute();
         JdbcUtil.close(preparedStatement,conn);
         return true;
+    }
+
+    @Override
+    public List<Application> listResult(int studentId) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "select * from application where student_id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1,studentId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Application> applications = new ArrayList<Application>();
+        Application application = null;
+        while(resultSet.next()){
+            application = new Application();
+            application.setId(resultSet.getInt("id"));
+            application.setTeacherId(resultSet.getInt("teacher_id"));
+            application.setTeacherName(resultSet.getString("teacher_name"));
+            application.setTeacherId(resultSet.getInt("student_id"));
+            application.setStudentName(resultSet.getString("student_name"));
+            application.setStudentNumber(resultSet.getString("student_number"));
+            application.setApplyTime(resultSet.getDate("apply_time"));
+            application.setIfAgree(resultSet.getString("if_agree"));
+
+            applications.add(application);
+        }
+        JdbcUtil.close(resultSet,preparedStatement,conn);
+        return applications;
     }
 }

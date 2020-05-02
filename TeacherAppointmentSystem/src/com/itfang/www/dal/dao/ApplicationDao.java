@@ -3,6 +3,7 @@ package com.itfang.www.dal.dao;
 import com.itfang.www.dal.po.Application;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author it-fang
@@ -17,4 +18,6 @@ public interface ApplicationDao {
      * @throws SQLException
      */
     boolean saveApplication(Application application) throws SQLException;
+
+    List<Application> listResult(int studentId) throws SQLException;
 }

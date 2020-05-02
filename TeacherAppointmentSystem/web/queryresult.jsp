@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Teacher Appointment System</title>
-
+    <script src="js/jquery-3.4.1.js"></script>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -27,15 +27,28 @@
         }
     </style>
 </head>
+<script>
+    $(function () {
+        $("#showResult").click(function () {
+            $.post($("#showResult").attr("href"),{},function (resultInfo) {
+                if (resultInfo.status ){
+                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryresult.jsp";
+                }else {
+                    alert(resultInfo.message);
+                    window.location.href = "/TeacherAppointmentSystem_war_exploded/queryresult.jsp";
+                }
+            });
+        });
+    });
+</script>
 <body>
 <div class="container">
     <h3><p class="text-center">预约申请结果列表</p></h3>
     <div style="float:right; margin: 5px;">
-        <a class="btn btn-success" href="/TeacherAppointmentSystem_war_exploded/queryResultServlet?studentId=${studentUser.studentId}" role="button">显示所有预约申请结果</a>
+        <p class="btn btn-success" id="showResult" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryResult" role="button">显示所有预约申请结果</p>
     </div>
     <div style="float: left; margin: 5px">
-        <a href="/TeacherAppointmentSystem_war_exploded/queryTeacherByPageServlet?currentPage=1&rows=5&studentId=${studentUser.studentId}" class="btn btn-primary active" role="button">返回</a>
-    </div>
+        <a href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher" class="btn btn-primary active" role="button">返回</a>    </div>
     <table border="1" class="table table-bordered table-hover">
         <tr class="success">
             <th>编号</th>
