@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Teacher Appointment System</title>
-    <script src="js/jquery-3.4.1.js"></script>
+    <script src="../js/jquery-3.4.1.js"></script>
 
     <style>
         *{
@@ -12,7 +12,7 @@
             box-sizing: border-box;
         }
         body{
-            background: url("img/background.jpg") no-repeat center;
+            background: url("../img/background.jpg") no-repeat center;
             background-size: 100%;
         }
         .rg_layout{
@@ -153,7 +153,7 @@
                 $.post("StudentUser/register",$("#form").serialize(),function (resultInfo) {
                     if (resultInfo.status){
                         if (confirm(resultInfo.message)){
-                            window.location.href = "/TeacherAppointmentSystem_war_exploded/studentlogin.jsp";
+                            window.location.href = "../studentlogin.jsp";
                         }else {
                             window.location.href = "/TeacherAppointmentSystem_war_exploded/studentregister.html";
                         }
@@ -239,7 +239,7 @@
     </div>
 
     <div class="rg_right">
-        <p>已有账号？<a href="studentlogin.jsp">立即登录</a></p>
+        <p>已有账号？<a href="../studentlogin.jsp">立即登录</a></p>
     </div>
 
 </div>
