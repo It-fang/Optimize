@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author it-fang
  * 对请求进行拦截判断是否处于登陆状态
  */
-@WebFilter(urlPatterns = {"/StudentUser/*","queryteacher.jsp","queryresult.jsp","application.jsp"})
+@WebFilter(urlPatterns = {"/StudentUser/*","/queryteacher.jsp","/queryresult.jsp","/application.jsp"})
 public class StudentUserFilter implements Filter {
 
     @Override

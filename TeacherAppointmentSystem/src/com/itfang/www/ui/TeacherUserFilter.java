@@ -9,10 +9,8 @@ import java.io.IOException;
  * @author it-fang
  * 对教师用户相关资源的请求进行拦截
  */
-@WebFilter(urlPatterns = {"/TeacherUser/*","/teacherregister.html","queryapplication.jsp","modify.jsp","agree.jsp"})
+@WebFilter(urlPatterns = {"/TeacherUser/*","/teacherregister.html","/queryapplication.jsp","/modify.jsp","/agree.jsp"})
 public class TeacherUserFilter implements Filter {
-
-
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         //1,强制转换
