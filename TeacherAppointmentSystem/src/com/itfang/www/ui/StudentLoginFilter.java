@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author it-fang
  * 对请求进行拦截判断是否处于登陆状态
  */
-@WebFilter("/*")
+@WebFilter("/StudentUser/*")
 public class StudentLoginFilter implements Filter {
 
     @Override

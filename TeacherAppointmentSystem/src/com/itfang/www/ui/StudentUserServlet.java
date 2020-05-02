@@ -24,7 +24,7 @@ import java.util.Map;
  * @author it-fang
  * 接收学生用户相关操作请求
  */
-public class StudentServlet extends BaseServlet {
+public class StudentUserServlet extends BaseServlet {
     private StudentService studentService = new StudentServiceImpl();
 
     /**
@@ -198,6 +198,17 @@ public class StudentServlet extends BaseServlet {
         Object resultInfo = studentService.apply(application);
         return resultInfo;
     }
+
+    /**
+     * 查询预约结果
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     * @throws ParseException
+     */
     public Object queryResult(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");

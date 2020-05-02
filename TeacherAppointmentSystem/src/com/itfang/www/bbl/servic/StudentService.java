@@ -54,5 +54,11 @@ public interface StudentService {
      */
     Object apply(Application application) throws SQLException;
 
+    /**
+     * 查询预约结果
+     * @param studentId
+     * @return resultInfo
+     * @throws SQLException
+     */
     Object queryResult(int studentId) throws SQLException;
 }

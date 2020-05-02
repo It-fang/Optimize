@@ -37,6 +37,12 @@ public class ApplicationDaoImpl implements ApplicationDao{
         return true;
     }
 
+    /**
+     * 查询预约结果
+     * @param studentId
+     * @return applications
+     * @throws SQLException
+     */
     @Override
     public List<Application> listResult(int studentId) throws SQLException {
         Connection conn = JdbcUtil.getConnection();

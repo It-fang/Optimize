@@ -9,10 +9,19 @@ import java.util.Date;
 public class Teacher {
     private int id;
     private String name;
+    private String number;
     private String college;
     private String major;
     private String clas;
     private Date freeTime;
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
     public int getId() {
         return id;

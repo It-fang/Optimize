@@ -19,5 +19,11 @@ public interface ApplicationDao {
      */
     boolean saveApplication(Application application) throws SQLException;
 
+    /**
+     * 查询预约结果
+     * @param studentId
+     * @return applications
+     * @throws SQLException
+     */
     List<Application> listResult(int studentId) throws SQLException;
 }

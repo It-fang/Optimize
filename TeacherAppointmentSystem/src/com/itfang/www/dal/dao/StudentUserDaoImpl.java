@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 /**
  * @author it-fang
- * 查询学生用户对象的相关操作
+ * 学生用户对象访问数据库的相关操作
  */
 public class StudentUserDaoImpl implements StudentUserDao{
     /**

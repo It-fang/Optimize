@@ -180,6 +180,12 @@ public class StudentServiceImpl implements StudentService {
         return resultInfo;
     }
 
+    /**
+     * 查询预约结果
+     * @param studentId
+     * @return resultInfo
+     * @throws SQLException
+     */
     @Override
     public Object queryResult(int studentId) throws SQLException {
         ApplicationDao applicationDao = new ApplicationDaoImpl();
