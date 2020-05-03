@@ -1,5 +1,6 @@
 package com.itfang.www.bbl.servic;
 
+import com.itfang.www.dal.po.ResultInfo;
 import com.itfang.www.dal.po.Teacher;
 import com.itfang.www.dal.po.TeacherUser;
 
@@ -36,4 +37,22 @@ public interface TeacherService {
      * @throws SQLException
      */
     Object login(TeacherUser teacherUser) throws SQLException;
+
+    /**
+     * 查询预约请求
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
+    ResultInfo queryApplication(int teacherId) throws SQLException;
+
+    /**
+     * 根据学生Id获取学生对象信息
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
+    ResultInfo getStudent(int studentId) throws SQLException;
+
+    Object agree(int studentId, int teacherId, String ifAgree) throws SQLException;
 }

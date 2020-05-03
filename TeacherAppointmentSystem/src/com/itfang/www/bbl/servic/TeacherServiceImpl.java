@@ -1,13 +1,11 @@
 package com.itfang.www.bbl.servic;
 
-import com.itfang.www.dal.dao.TeacherUserDao;
-import com.itfang.www.dal.dao.TeacherUserDaoImpl;
-import com.itfang.www.dal.po.ResultInfo;
-import com.itfang.www.dal.po.Teacher;
-import com.itfang.www.dal.po.TeacherUser;
+import com.itfang.www.dal.dao.*;
+import com.itfang.www.dal.po.*;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author it-fang
@@ -117,6 +115,54 @@ public class TeacherServiceImpl implements TeacherService {
         }else {
             resultInfo.setStatus(false);
             resultInfo.setMessage("该用户不存在!");
+        }
+        return resultInfo;
+    }
+
+    /**
+     * 查询预约请求
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public ResultInfo queryApplication(int teacherId) throws SQLException {
+        ApplicationDao applicationDao = new ApplicationDaoImpl();
+        List<Application> applications = applicationDao.listApplication(teacherId);
+        if (applications == null){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("没有任何预约申请!");
+        }else {
+            resultInfo.setStatus(true);
+            resultInfo.setData(applications);
+        }
+        return resultInfo;
+    }
+
+    /**
+     * 根据学生Id获取学生对象信息
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public ResultInfo getStudent(int studentId) throws SQLException {
+        StudentUserDao studentUserDao = new StudentUserDaoImpl();
+        Student student = studentUserDao.getStudent(studentId);
+        resultInfo.setData(student);
+        return resultInfo;
+    }
+
+    @Override
+    public Object agree(int studentId, int teacherId, String ifAgree) throws SQLException {
+        ApplicationDao applicationDao = new ApplicationDaoImpl();
+        boolean status = applicationDao.saveAgree(studentId,teacherId,ifAgree);
+        if (status){
+            resultInfo.setStatus(true);
+            resultInfo.setMessage("提交成功");
+        }else {
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("提交失败");
         }
         return resultInfo;
     }

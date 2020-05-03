@@ -58,7 +58,7 @@ public class ApplicationDaoImpl implements ApplicationDao{
             application.setId(resultSet.getInt("id"));
             application.setTeacherId(resultSet.getInt("teacher_id"));
             application.setTeacherName(resultSet.getString("teacher_name"));
-            application.setTeacherId(resultSet.getInt("student_id"));
+            application.setStudentId(resultSet.getInt("student_id"));
             application.setStudentName(resultSet.getString("student_name"));
             application.setStudentNumber(resultSet.getString("student_number"));
             application.setApplyTime(resultSet.getDate("apply_time"));
@@ -68,5 +68,54 @@ public class ApplicationDaoImpl implements ApplicationDao{
         }
         JdbcUtil.close(resultSet,preparedStatement,conn);
         return applications;
+    }
+
+    /**
+     * 根据教师Id从数据库中查询预约请求
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<Application> listApplication(int teacherId) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "select * from application where teacher_id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1,teacherId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Application> applications = new ArrayList<Application>();
+        Application application = null;
+        while(resultSet.next()){
+            application = new Application();
+            application.setId(resultSet.getInt("id"));
+            application.setTeacherId(resultSet.getInt("teacher_id"));
+            application.setTeacherName(resultSet.getString("teacher_name"));
+            application.setStudentId(resultSet.getInt("student_id"));
+            application.setStudentName(resultSet.getString("student_name"));
+            application.setStudentNumber(resultSet.getString("student_number"));
+            application.setApplyTime(resultSet.getDate("apply_time"));
+            application.setIfAgree(resultSet.getString("if_agree"));
+            applications.add(application);
+        }
+        JdbcUtil.close(resultSet,preparedStatement,conn);
+        return applications;
+    }
+
+    @Override
+    public boolean saveAgree(int studentId, int teacherId, String ifAgree) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "update application " +
+                "set " +
+                "if_agree = ?" +
+                "where teacher_id = ? and student_id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1,ifAgree);
+        preparedStatement.setInt(2,teacherId);
+        preparedStatement.setInt(3,studentId);
+        preparedStatement.execute();
+        JdbcUtil.close(preparedStatement,conn);
+        return true;
     }
 }

@@ -32,7 +32,6 @@
                 location.href="/TeacherAppointmentSystem_war_exploded/deleteApplicationServlet?id="+teacherId+"&number="+number;
             }
         }
-
         window.onload = function () {
             document.getElementById("agreeSelect").onclick = function () {
                 var flag = false;
@@ -55,7 +54,6 @@
                     boxs[i].checked = this.checked;
                 }
             }
-
         }
     </script>
 </head>
@@ -67,7 +65,7 @@
         <a class="btn btn-primary" href="/TeacherAppointmentSystem_war_exploded/modifyServlet?id=${teacherUser.teacherId}" role="button">修改自己信息</a>
     </div>
     <div style="float:right; margin: 5px;">
-        <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/queryApplicationServlet?id=${teacherUser.teacherId}" role="button">显示所有预约申请</a>
+        <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication" role="button">显示所有预约申请</a>
     </div>
     <div style="float:left; margin: 10px;">
         <a class="btn btn-primary" href="javascript:void(0)" id="agreeSelect" role="button">同意所选预约申请</a>
@@ -93,7 +91,7 @@
                 <td>${application.ifAgree}</td>
                 <td>
                     <p>
-                        <a href="/TeacherAppointmentSystem_war_exploded/showServlet?id=${application.teacherId}&number=${application.studentNumber}" class="btn btn-primary btn-xs active" role="button">审批</a>
+                        <a href="/TeacherAppointmentSystem_war_exploded/TeacherUser/toAgree?studentId=${application.studentId}" class="btn btn-primary btn-xs active" role="button">审批</a>
                         <a href="javascript:deleteApplication('${application.teacherId}','${application.studentNumber}');" class="btn btn-primary btn-xs active" role="button">删除</a>
                     </p>
                 </td>

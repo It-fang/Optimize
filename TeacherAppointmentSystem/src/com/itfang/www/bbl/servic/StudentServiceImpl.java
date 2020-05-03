@@ -192,7 +192,7 @@ public class StudentServiceImpl implements StudentService {
         List<Application> applications = applicationDao.listResult(studentId);
         if (applications == null){
             resultInfo.setStatus(false);
-            resultInfo.setMessage("没有任务预约申请!");
+            resultInfo.setMessage("没有任何预约申请!");
         }else {
             resultInfo.setStatus(true);
             resultInfo.setData(applications);

@@ -18,11 +18,10 @@ public class TeacherUserFilter implements Filter {
         //2,获取资源路径
         String uri = request.getRequestURI();
         //3,判断是否跟教师用户登陆和注册相关的资源
-        if (uri.contains("/teacherlogin.jsp")|| uri.contains("TeacherUser/checkUsername") || uri.contains("TeacherUser/login")
-                || uri.contains("/css/*") || uri.contains("/js/*") || uri.contains("/img/background.jpg")) {
+        if (uri.contains("/teacherlogin.jsp")|| uri.contains("TeacherUser/checkUsername")
+                || uri.contains("TeacherUser/login")) {
             chain.doFilter(req, resp);
-        } else if (uri.contains("/teacherregister.html") || uri.contains("TeacherUser/register")
-                || uri.contains("/css/*") || uri.contains("/js/*") || uri.contains("/img/background.jpg")) {
+        } else if (uri.contains("/teacherregister.html") || uri.contains("TeacherUser/register")) {
             //判断是否登陆超级管理员账号
             Object adminUser = request.getSession().getAttribute("adminUser");
             if (adminUser != null){

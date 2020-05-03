@@ -44,6 +44,14 @@ public class BaseServlet extends HttpServlet {
                 response.sendRedirect("/TeacherAppointmentSystem_war_exploded/application.jsp");
                 return;
             }
+            if(requestName.contains("queryApplication")){
+                request.getRequestDispatcher("/queryapplication.jsp").forward(request,response);
+                return;
+            }
+            if (requestName.contains("toAgree")){
+                request.getRequestDispatcher("/agree.jsp").forward(request,response);
+                return;
+            }
             ObjectMapper objectMapper = new ObjectMapper();
             // 设置编码格式
             response.setContentType("application/json;charset=utf-8");
@@ -51,7 +59,6 @@ public class BaseServlet extends HttpServlet {
             objectMapper.writeValue( response.getOutputStream(), invokeResponse);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-            request.getRequestDispatcher("/queryteacher.jsp").forward(request,response);
         }
     }
 }

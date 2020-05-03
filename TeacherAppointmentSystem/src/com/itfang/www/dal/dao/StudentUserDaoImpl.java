@@ -144,4 +144,33 @@ public class StudentUserDaoImpl implements StudentUserDao{
         JdbcUtil.close(resultSet,preparedStatement,conn);
         return status;
     }
+
+    /**
+     * 根据学生Id从数据库中获取学生对象信息
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public Student getStudent(int studentId) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "select * from student where id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1,studentId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Student student = null;
+        while(resultSet.next()){
+            student = new Student();
+            student.setId(resultSet.getInt("id"));
+            student.setNumber(resultSet.getString("number"));
+            student.setName(resultSet.getString("name"));
+            student.setSex(resultSet.getString("sex"));
+            student.setCollege(resultSet.getString("college"));
+            student.setMajor(resultSet.getString("major"));
+            student.setClas(resultSet.getString("clas"));
+        }
+        JdbcUtil.close(resultSet,preparedStatement,conn);
+        return student;
+    }
 }

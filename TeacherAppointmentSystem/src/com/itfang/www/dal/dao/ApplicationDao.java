@@ -26,4 +26,14 @@ public interface ApplicationDao {
      * @throws SQLException
      */
     List<Application> listResult(int studentId) throws SQLException;
+
+    /**
+     * 根据教师Id从数据库中查询预约请求
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
+    List<Application> listApplication(int teacherId) throws SQLException;
+
+    boolean saveAgree(int studentId, int teacherId, String ifAgree) throws SQLException;
 }

@@ -4,10 +4,7 @@ import com.itfang.www.bbl.servic.StudentService;
 import com.itfang.www.bbl.servic.StudentServiceImpl;
 import com.itfang.www.bbl.servic.TeacherService;
 import com.itfang.www.bbl.servic.TeacherServiceImpl;
-import com.itfang.www.dal.po.Student;
-import com.itfang.www.dal.po.StudentUser;
-import com.itfang.www.dal.po.Teacher;
-import com.itfang.www.dal.po.TeacherUser;
+import com.itfang.www.dal.po.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author it-fang
@@ -108,4 +107,60 @@ public class TeacherUserServlet extends BaseServlet {
         return resultInfo;
     }
 
+    /**
+     * 查询预约请求
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
+    public Object queryApplication(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取参数
+        TeacherUser teacherUser = (TeacherUser) request.getSession().getAttribute("teacherUser");
+        int teacherId = teacherUser.getTeacherId();
+        //3,传入参数
+        ResultInfo resultInfo = teacherService.queryApplication(teacherId);
+        request.setAttribute("applications",((List<Application>)resultInfo.getData()));
+        return resultInfo;
+    }
+
+    /**
+     * 将请求转发到agree.jsp页面
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
+    public Object toAgree(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取参数
+        String _studentId = request.getParameter("studentId");
+        int studentId = Integer.parseInt(_studentId);
+        //3,传入参数
+        ResultInfo resultInfo = teacherService.getStudent(studentId);
+        //4,将resultInfo的数据存入request域中
+        request.setAttribute("student",(Student)resultInfo.getData());
+        return resultInfo;
+    }
+
+    public Object agree(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取请求参数
+        String _studentId = request.getParameter("studentId");
+        int studentId = Integer.parseInt(_studentId);
+        String ifAgree = request.getParameter("ifAgree");
+        TeacherUser teacherUser = (TeacherUser) request.getSession().getAttribute("teacherUser");
+        int teacherId = teacherUser.getTeacherId();
+        //3,传入参数
+        Object resultInfo = teacherService.agree(studentId,teacherId,ifAgree);
+        return resultInfo;
+    }
 }
