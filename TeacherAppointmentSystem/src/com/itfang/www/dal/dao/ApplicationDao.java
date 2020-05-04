@@ -45,5 +45,12 @@ public interface ApplicationDao {
      */
     boolean saveAgree(int studentId, int teacherId, String ifAgree) throws SQLException;
 
+    /**
+     * 根据studentId和teacherId来删除数据库中的预约请求数据
+     * @param studentId
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
     boolean deleteApplication(int studentId, int teacherId) throws SQLException;
 }

@@ -180,6 +180,13 @@ public class TeacherServiceImpl implements TeacherService {
         return resultInfo;
     }
 
+    /**
+     * 删除预约请求
+     * @param _studentId
+     * @param _teacherId
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object deleteApplication(String _studentId, String _teacherId) throws SQLException {
         if ("".equals(_studentId) || "".equals(_teacherId)){
@@ -197,6 +204,37 @@ public class TeacherServiceImpl implements TeacherService {
         }else {
             resultInfo.setStatus(false);
             resultInfo.setMessage("删除失败");
+        }
+        return resultInfo;
+    }
+
+    /**
+     * 获取教师对象并存入resultInfo数据域中
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public ResultInfo getTeacher(int teacherId) throws SQLException {
+        Teacher teacher = teacherUserDao.getTeacher(teacherId);
+        resultInfo.setData(teacher);
+        return resultInfo;
+    }
+
+    @Override
+    public Object updateTeacher(Teacher teacher,int teacherId) throws SQLException {
+        if ("".equals(teacher.getName()) || "".equals(teacher.getNumber()) || "".equals(teacher.getCollege()) || "".equals(teacher.getMajor()) || "".equals(teacher.getClas())){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("除了空闲时间,请将其他信息填完整！");
+            return resultInfo;
+        }
+        boolean status = teacherUserDao.updateTeacher(teacher,teacherId);
+        if (status){
+            resultInfo.setStatus(true);
+            resultInfo.setMessage("修改信息成功!");
+        }else {
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("修改信息失败!");
         }
         return resultInfo;
     }

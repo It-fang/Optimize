@@ -32,7 +32,6 @@
                     window.location.href = "/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher";
                 }else {
                     alert(resultInfo.message);
-                    window.location.href = "/TeacherAppointmentSystem_war_exploded/application.jsp";
                 }
             },"json");
         });

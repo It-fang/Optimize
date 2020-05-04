@@ -116,8 +116,8 @@ public class ApplicationDaoImpl implements ApplicationDao{
         String sql = "" +
                 "update application " +
                 "set " +
-                "if_agree = ?" +
-                "where teacher_id = ? and student_id = ?";
+                "if_agree=?" +
+                "where teacher_id=? and student_id=?";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setString(1,ifAgree);
         preparedStatement.setInt(2,teacherId);
@@ -127,6 +127,13 @@ public class ApplicationDaoImpl implements ApplicationDao{
         return true;
     }
 
+    /**
+     * 根据studentId和teacherId来删除数据库中的预约请求数据
+     * @param studentId
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
     @Override
     public boolean deleteApplication(int studentId, int teacherId) throws SQLException {
         Connection conn = JdbcUtil.getConnection();

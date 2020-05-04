@@ -4,10 +4,7 @@ import com.itfang.www.dal.po.Teacher;
 import com.itfang.www.dal.po.TeacherUser;
 import com.itfang.www.util.JdbcUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 
 /**
@@ -143,6 +140,61 @@ public class TeacherUserDaoImpl implements TeacherUserDao {
         }
         JdbcUtil.close(resultSet,preparedStatement,conn);
         return status;
+    }
+
+    /**
+     * 根据教师Id从数据库中获取教师对象
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public Teacher getTeacher(int teacherId) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "select * from teacher where id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1,teacherId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Teacher teacher = null;
+        while(resultSet.next()){
+            teacher = new Teacher();
+            teacher.setId(resultSet.getInt("id"));
+            teacher.setName(resultSet.getString("name"));
+            teacher.setNumber(resultSet.getString("number"));
+            teacher.setCollege(resultSet.getString("college"));
+            teacher.setMajor(resultSet.getString("major"));
+            teacher.setClas(resultSet.getString("clas"));
+            teacher.setFreeTime(resultSet.getDate("free_time"));
+        }
+        JdbcUtil.close(resultSet,preparedStatement,conn);
+        return teacher;
+
+    }
+
+    @Override
+    public boolean updateTeacher(Teacher teacher, int teacherId) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "update teacher " +
+                "set " +
+                "name=?,number=?,college=?,major=?,clas=?,free_time=?" +
+                "where id=?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1,teacher.getName());
+        preparedStatement.setString(2,teacher.getNumber());
+        preparedStatement.setString(3,teacher.getCollege());
+        preparedStatement.setString(4,teacher.getMajor());
+        preparedStatement.setString(5,teacher.getClas());
+        if (teacher.getFreeTime() == null){
+            preparedStatement.setDate(6,Date.valueOf("1900-01-02"));
+        }else {
+            preparedStatement.setDate(6,new Date(teacher.getFreeTime().getTime()));
+        }
+        preparedStatement.setInt(7,teacherId);
+        preparedStatement.execute();
+        JdbcUtil.close(preparedStatement,conn);
+        return true;
     }
 
 }

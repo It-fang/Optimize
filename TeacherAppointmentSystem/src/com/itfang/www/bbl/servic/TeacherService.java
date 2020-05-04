@@ -64,5 +64,22 @@ public interface TeacherService {
      */
     Object agree(int studentId, int teacherId, String ifAgree) throws SQLException;
 
+    /**
+     * 删除预约请求
+     * @param _studentId
+     * @param _teacherId
+     * @return
+     * @throws SQLException
+     */
     Object deleteApplication(String _studentId, String _teacherId) throws SQLException;
+
+    /**
+     * 获取教师对象并存入resultInfo数据域中
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
+    ResultInfo getTeacher(int teacherId) throws SQLException;
+
+    Object updateTeacher(Teacher teacher,int teacherId) throws SQLException;
 }

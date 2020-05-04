@@ -50,4 +50,14 @@ public interface TeacherUserDao {
      * @throws SQLException
      */
     boolean checkPassword(TeacherUser teacherUser) throws SQLException;
+
+    /**
+     * 根据教师Id从数据库中获取教师对象
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
+    Teacher getTeacher(int teacherId) throws SQLException;
+
+    boolean updateTeacher(Teacher teacher, int teacherId) throws SQLException;
 }

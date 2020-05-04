@@ -184,8 +184,11 @@ public class StudentUserServlet extends BaseServlet {
         String studentName = request.getParameter("name");
         String studentNumber = request.getParameter("number");
         String _applyTime = request.getParameter("time");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date applyTime = simpleDateFormat.parse(_applyTime);
+        Date applyTime = null;
+        if (!(_applyTime == null || "".equals(_applyTime))){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            applyTime = simpleDateFormat.parse(_applyTime);
+        }
         //3,封装申请表对象
         Application application = new Application();
         application.setTeacherId(teacherId);

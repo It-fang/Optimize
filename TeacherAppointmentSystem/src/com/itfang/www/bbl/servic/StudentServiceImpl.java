@@ -168,7 +168,7 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public Object apply(Application application) throws SQLException {
-        if ("".equals(application.getTeacherId()) || "".equals(application.getTeacherName()) || "".equals(application.getStudentName()) || "".equals(application.getStudentNumber()) || "".equals(application.getStudentId()) || "".equals(application.getApplyTime())){
+        if ("".equals(application.getTeacherId()) || "".equals(application.getTeacherName()) || "".equals(application.getStudentName()) || "".equals(application.getStudentNumber()) || "".equals(application.getStudentId()) || "".equals(application.getApplyTime()) || application.getApplyTime() ==null){
             resultInfo.setStatus(false);
             resultInfo.setMessage("请将预约信息填完整！");
             return resultInfo;

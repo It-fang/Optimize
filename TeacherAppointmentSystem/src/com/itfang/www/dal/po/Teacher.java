@@ -67,8 +67,6 @@ public class Teacher {
         return freeTime;
     }
 
-
-
     public void setFreeTime(Date freeTime) {
         this.freeTime = freeTime;
     }

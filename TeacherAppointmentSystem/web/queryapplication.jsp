@@ -40,6 +40,8 @@
                 });
             }
         }
+
+
         window.onload = function () {
             document.getElementById("agreeSelect").onclick = function () {
                 var flag = false;
@@ -66,11 +68,10 @@
     </script>
 </head>
 <body>
-
 <div class="container">
     <h3><p class="text-center">学生预约申请列表</p></h3>
     <div style="float:left; margin: 10px;">
-        <a class="btn btn-primary" href="/TeacherAppointmentSystem_war_exploded/modifyServlet?id=${teacherUser.teacherId}" role="button">修改自己信息</a>
+        <a class="btn btn-primary" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/toModify" role="button">修改自己信息</a>
     </div>
     <div style="float:right; margin: 5px;">
         <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication" role="button">显示所有预约申请</a>

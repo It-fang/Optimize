@@ -26,12 +26,32 @@
             text-align: center;
         }
     </style>
+    <script>
+        $(function () {
+            $("#button").click(function () {
+                if (confirm("是否提交修改的信息?")){
+                    $.post("TeacherUser/modify",$("#form").serialize(),function (resultInfo) {
+                        if (resultInfo.status){
+                            alert(resultInfo.message);
+                            window.location.href = "/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication";
+                        }else {
+                            alert(resultInfo.message);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-    <form action="/TeacherAppointmentSystem_war_exploded/updateServlet?id=${teacher.id}" method="post">
+    <form id="form" action="/TeacherAppointmentSystem_war_exploded/updateServlet?id=${teacher.id}" method="post">
         <div class="form-group col-xl-3">
             <label for="name">姓名</label>
             <input type="text" class="form-control" id="name" name="name" value="${teacher.name}" placeholder="请输入你的名字">
+        </div>
+        <div class="form-group col-xl-3">
+            <label for="number">工号</label>
+            <input type="text" class="form-control" id="number" name="number" value="${teacher.number}" placeholder="请输入你的工号">
         </div>
         <div class="form-group col-xl-3">
             <label for="college">学院</label>
@@ -46,10 +66,10 @@
             <input type="text" class="form-control" id="clas" name="clas" value="${teacher.clas}" placeholder="请输入班级">
         </div>
         <div class="form-group col-xl-3">
-            <label for="freetime">空闲时间</label>
-            <input type="datetime-local" class="form-control" id="freetime" name="freetime" placeholder="请输入你的空闲时间">
+            <label for="time">空闲时间</label>
+            <input type="date" class="form-control" id="time" name="time" value="${teacher.freeTime}" placeholder="请输入你的空闲时间">
         </div>
-        <input type="submit" class="btn btn-success" value="修改 ">
+        <input type="button" id="button" class="btn btn-success" value="修改 ">
     </form>
 </body>
 </html>
