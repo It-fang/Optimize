@@ -88,7 +88,7 @@
     <h7>--------------------其他用户登陆------------------</h7>
     <p style="margin-left: 70px">
         <a href="teacherlogin.jsp" class="btn btn-info active"  role="button">教师登陆</a>
-        <a href="adminlogin.html" class="btn btn-info     active" role="button">管理员登陆</a>
+        <a href="adminlogin.jsp" class="btn btn-info     active" role="button">管理员登陆</a>
     </p>
     <c:if test="${msg != null}">
         <span style="margin-left:70px ;background-color: yellow">${msg}</span>

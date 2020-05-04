@@ -217,6 +217,16 @@ public class TeacherUserServlet extends BaseServlet {
         return resultInfo;
     }
 
+    /**
+     * 修改教师用户自身信息
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     * @throws ParseException
+     */
     public Object modify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
         //1,设置编码
         request.setCharacterEncoding("utf-8");
@@ -244,6 +254,19 @@ public class TeacherUserServlet extends BaseServlet {
         teacher.setFreeTime(freeTime);
         //4,传入参数
         Object resultInfo = teacherService.updateTeacher(teacher,teacherId);
+        return resultInfo;
+    }
+
+
+    public Object agreeSelect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取请求参数
+        String[] studentIds = request.getParameterValues("studentIds");
+        TeacherUser teacherUser = (TeacherUser) request.getSession().getAttribute("teacherUser");
+        int teacherId = teacherUser.getTeacherId();
+        //3,传入参数
+        Object resultInfo = teacherService.agreeSelect(teacherId,studentIds);
         return resultInfo;
     }
 }

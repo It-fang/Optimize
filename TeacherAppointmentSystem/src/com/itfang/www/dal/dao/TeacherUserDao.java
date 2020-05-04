@@ -59,5 +59,12 @@ public interface TeacherUserDao {
      */
     Teacher getTeacher(int teacherId) throws SQLException;
 
+    /**
+     * 根据教师Id，在数据库中更新教师用户信息
+     * @param teacher
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
     boolean updateTeacher(Teacher teacher, int teacherId) throws SQLException;
 }

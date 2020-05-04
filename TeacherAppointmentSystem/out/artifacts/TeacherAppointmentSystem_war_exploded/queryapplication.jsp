@@ -26,6 +26,7 @@
             text-align: center;
         }
     </style>
+<%--    删除预约请求--%>
     <script>
         function deleteApplication(teacherId,studentId) {
             if (confirm("一旦删除,学生申请将被销毁！您确定要删除吗？")){
@@ -40,13 +41,14 @@
                 });
             }
         }
-
-
+    </script>
+<%--    同意所选的预约请求--%>
+    <script>
         window.onload = function () {
             document.getElementById("agreeSelect").onclick = function () {
                 var flag = false;
                 if (confirm("您确定要同意所有预约申请吗？")){
-                    var boxs = document.getElementsByName("studentNumbers");
+                    var boxs = document.getElementsByName("studentIds");
                     for(var i= 0; i<boxs.length; i++){
                         if (boxs[i].checked){
                             flag = true;
@@ -54,12 +56,20 @@
                         }
                     }
                     if (flag == true){
-                        document.getElementById("form").submit();
+                        $.post($("#form").attr("action"),$("#form").serialize(),function (resultInfo) {
+                            if (resultInfo.status){
+                                alert(resultInfo.message);
+                                window.location.href = "/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication";
+                            }else {
+                                alert(resultInfo.message);
+                            }
+                        });
                     }
                 }
             }
+            // 全选或全不选
             document.getElementById("firstBox").onclick = function () {
-                var boxs = document.getElementsByName("studentNumbers");
+                var boxs = document.getElementsByName("studentIds");
                 for(var i= 0; i<boxs.length; i++){
                     boxs[i].checked = this.checked;
                 }
@@ -77,9 +87,9 @@
         <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication" role="button">显示所有预约申请</a>
     </div>
     <div style="float:left; margin: 10px;">
-        <a class="btn btn-primary" href="javascript:void(0)" id="agreeSelect" role="button">同意所选预约申请</a>
+        <a class="btn btn-primary"  id="agreeSelect" role="button">同意所选预约申请</a>
     </div>
-    <form action="/TeacherAppointmentSystem_war_exploded/agreeSelectServlet?id=${teacherUser.teacherId}" method="post" id="form">
+    <form action="/TeacherAppointmentSystem_war_exploded/TeacherUser/agreeSelect" id="form">
         <table border="1" class="table table-bordered table-hover">
         <tr class="success">
             <th><input type="checkbox" id="firstBox"></th>
@@ -92,7 +102,7 @@
         </tr>
         <c:forEach items="${applications}" var="application" varStatus="s">
             <tr>
-                <td><input type="checkbox" name="studentNumbers" id="box" value="${application.studentNumber}"></td>
+                <td><input type="checkbox" name="studentIds" id="box" value="${application.studentId}"></td>
                 <td>${s.count}</td>
                 <td>${application.studentName}</td>
                 <td>${application.studentNumber}</td>

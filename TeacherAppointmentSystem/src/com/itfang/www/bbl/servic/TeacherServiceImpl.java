@@ -3,6 +3,7 @@ package com.itfang.www.bbl.servic;
 import com.itfang.www.dal.dao.*;
 import com.itfang.www.dal.po.*;
 
+import javax.servlet.jsp.tagext.JspTag;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -221,6 +222,13 @@ public class TeacherServiceImpl implements TeacherService {
         return resultInfo;
     }
 
+    /**
+     * 修改教师对象信息
+     * @param teacher
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object updateTeacher(Teacher teacher,int teacherId) throws SQLException {
         if ("".equals(teacher.getName()) || "".equals(teacher.getNumber()) || "".equals(teacher.getCollege()) || "".equals(teacher.getMajor()) || "".equals(teacher.getClas())){
@@ -235,6 +243,30 @@ public class TeacherServiceImpl implements TeacherService {
         }else {
             resultInfo.setStatus(false);
             resultInfo.setMessage("修改信息失败!");
+        }
+        return resultInfo;
+    }
+
+    @Override
+    public Object agreeSelect(int teacherId, String[] studentIds) throws SQLException {
+        if (studentIds.length == 0){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("没有任何选中!");
+        }
+        boolean status = false;
+        ApplicationDao applicationDao = new ApplicationDaoImpl();
+        for (String _studentId:studentIds){
+            int studentId = Integer.parseInt(_studentId);
+            status = applicationDao.saveAgree(studentId,teacherId,"同意");
+            if (status == false){
+                resultInfo.setStatus(false);
+                resultInfo.setMessage("提交失败");
+                return resultInfo;
+            }
+        }
+        if (status == true){
+            resultInfo.setStatus(true);
+            resultInfo.setMessage("提交成功");
         }
         return resultInfo;
     }

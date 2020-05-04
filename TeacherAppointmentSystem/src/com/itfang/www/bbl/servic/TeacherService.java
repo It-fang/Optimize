@@ -81,5 +81,14 @@ public interface TeacherService {
      */
     ResultInfo getTeacher(int teacherId) throws SQLException;
 
+    /**
+     * 修改教师对象信息
+     * @param teacher
+     * @param teacherId
+     * @return
+     * @throws SQLException
+     */
     Object updateTeacher(Teacher teacher,int teacherId) throws SQLException;
+
+    Object agreeSelect(int teacherId, String[] studentIds) throws SQLException;
 }
