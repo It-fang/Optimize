@@ -153,8 +153,21 @@ public class TeacherServiceImpl implements TeacherService {
         return resultInfo;
     }
 
+    /**
+     * 教师审批预约请求
+     * @param studentId
+     * @param teacherId
+     * @param ifAgree
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object agree(int studentId, int teacherId, String ifAgree) throws SQLException {
+        if ("".equals(ifAgree) || ifAgree == null){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("请填写处理结果！");
+            return resultInfo;
+        }
         ApplicationDao applicationDao = new ApplicationDaoImpl();
         boolean status = applicationDao.saveAgree(studentId,teacherId,ifAgree);
         if (status){
@@ -163,6 +176,27 @@ public class TeacherServiceImpl implements TeacherService {
         }else {
             resultInfo.setStatus(false);
             resultInfo.setMessage("提交失败");
+        }
+        return resultInfo;
+    }
+
+    @Override
+    public Object deleteApplication(String _studentId, String _teacherId) throws SQLException {
+        if ("".equals(_studentId) || "".equals(_teacherId)){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("删除失败");
+            return resultInfo;
+        }
+        int studentId = Integer.parseInt(_studentId);
+        int teacherId = Integer.parseInt(_teacherId);
+        ApplicationDao applicationDao = new ApplicationDaoImpl();
+        boolean status = applicationDao.deleteApplication(studentId,teacherId);
+        if (status){
+            resultInfo.setStatus(true);
+            resultInfo.setMessage("删除成功");
+        }else {
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("删除失败");
         }
         return resultInfo;
     }

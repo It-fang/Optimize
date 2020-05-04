@@ -102,6 +102,14 @@ public class ApplicationDaoImpl implements ApplicationDao{
         return applications;
     }
 
+    /**
+     * 将教师的审批结果存入数据库中
+     * @param studentId
+     * @param teacherId
+     * @param ifAgree
+     * @return
+     * @throws SQLException
+     */
     @Override
     public boolean saveAgree(int studentId, int teacherId, String ifAgree) throws SQLException {
         Connection conn = JdbcUtil.getConnection();
@@ -114,6 +122,20 @@ public class ApplicationDaoImpl implements ApplicationDao{
         preparedStatement.setString(1,ifAgree);
         preparedStatement.setInt(2,teacherId);
         preparedStatement.setInt(3,studentId);
+        preparedStatement.execute();
+        JdbcUtil.close(preparedStatement,conn);
+        return true;
+    }
+
+    @Override
+    public boolean deleteApplication(int studentId, int teacherId) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "delete from application " +
+                "where student_id = ? and teacher_id = ?";
+        PreparedStatement preparedStatement =conn.prepareStatement(sql);
+        preparedStatement.setInt(1,studentId);
+        preparedStatement.setInt(2,teacherId);
         preparedStatement.execute();
         JdbcUtil.close(preparedStatement,conn);
         return true;

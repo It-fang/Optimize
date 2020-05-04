@@ -35,5 +35,15 @@ public interface ApplicationDao {
      */
     List<Application> listApplication(int teacherId) throws SQLException;
 
+    /**
+     * 将教师的审批结果存入数据库中
+     * @param studentId
+     * @param teacherId
+     * @param ifAgree
+     * @return
+     * @throws SQLException
+     */
     boolean saveAgree(int studentId, int teacherId, String ifAgree) throws SQLException;
+
+    boolean deleteApplication(int studentId, int teacherId) throws SQLException;
 }

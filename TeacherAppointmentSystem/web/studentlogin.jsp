@@ -87,7 +87,7 @@
     <a href="StudentUser/studentregister.html" style="margin-right: 10px">学生注册</a><br><br><br>
     <h7>--------------------其他用户登陆------------------</h7>
     <p style="margin-left: 70px">
-        <a href="teacherlogin.html" class="btn btn-info active"  role="button">教师登陆</a>
+        <a href="teacherlogin.jsp" class="btn btn-info active"  role="button">教师登陆</a>
         <a href="adminlogin.html" class="btn btn-info     active" role="button">管理员登陆</a>
     </p>
     <c:if test="${msg != null}">

@@ -150,6 +150,15 @@ public class TeacherUserServlet extends BaseServlet {
         return resultInfo;
     }
 
+    /**
+     * 教师审批预约请求
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
     public Object agree(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");
@@ -161,6 +170,17 @@ public class TeacherUserServlet extends BaseServlet {
         int teacherId = teacherUser.getTeacherId();
         //3,传入参数
         Object resultInfo = teacherService.agree(studentId,teacherId,ifAgree);
+        return resultInfo;
+    }
+
+    public Object deleteApplication(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取请求参数
+        String studentId = request.getParameter("studentId");
+        String teacherId = request.getParameter("teacherId");
+        //3,传入参数
+        Object resultInfo = teacherService.deleteApplication(studentId,teacherId);
         return resultInfo;
     }
 }

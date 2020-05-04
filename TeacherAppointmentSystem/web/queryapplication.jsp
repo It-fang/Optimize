@@ -27,9 +27,17 @@
         }
     </style>
     <script>
-        function deleteApplication(teacherId,number) {
+        function deleteApplication(teacherId,studentId) {
             if (confirm("一旦删除,学生申请将被销毁！您确定要删除吗？")){
-                location.href="/TeacherAppointmentSystem_war_exploded/deleteApplicationServlet?id="+teacherId+"&number="+number;
+                $.post("TeacherUser/deleteApplication",{teacherId:teacherId,studentId:studentId},function (resultInfo) {
+                    if (resultInfo.status){
+                        alert(resultInfo.message);
+                        window.location.href = "/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication";
+                    }else {
+                        alert(resultInfo.message);
+                        window.location.href = "/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication";
+                    }
+                });
             }
         }
         window.onload = function () {
@@ -92,7 +100,7 @@
                 <td>
                     <p>
                         <a href="/TeacherAppointmentSystem_war_exploded/TeacherUser/toAgree?studentId=${application.studentId}" class="btn btn-primary btn-xs active" role="button">审批</a>
-                        <a href="javascript:deleteApplication('${application.teacherId}','${application.studentNumber}');" class="btn btn-primary btn-xs active" role="button">删除</a>
+                        <a href="javascript:deleteApplication('${application.teacherId}','${application.studentId}');" class="btn btn-primary btn-xs active" role="button">删除</a>
                     </p>
                 </td>
             </tr>
