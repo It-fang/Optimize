@@ -57,6 +57,11 @@ public class AdminServiceImpl implements AdminService {
         return resultInfo;
     }
 
+    /**
+     * 查询所有注册申请
+     * @return
+     * @throws SQLException
+     */
     @Override
     public ResultInfo queryRegister() throws SQLException {
         List<StudentUser> studentUsers = registerApplicationDao.listRegisterApplication();
@@ -66,6 +71,25 @@ public class AdminServiceImpl implements AdminService {
         }else {
             resultInfo.setStatus(true);
             resultInfo.setData(studentUsers);
+        }
+        return resultInfo;
+    }
+
+    @Override
+    public Object agreeRegister(StudentUser studentUser) throws SQLException {
+        boolean status = registerApplicationDao.saveStudentUser(studentUser);
+        if (status){
+            status = registerApplicationDao.deleteRegisterApplication(studentUser);
+            if (status){
+                resultInfo.setStatus(true);
+                resultInfo.setMessage("成功同意该用户的注册申请");
+            }else {
+                resultInfo.setStatus(false);
+                resultInfo.setMessage("同意失败");
+            }
+        }else {
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("同意失败");
         }
         return resultInfo;
     }

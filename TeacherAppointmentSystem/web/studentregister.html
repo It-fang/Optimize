@@ -127,7 +127,6 @@
     </script>
     <!--通过异步提交判断用户名是否存在-->
     <script>
-        //使用Ajax判断注册用户名是否存在
         $(function () {
             $("#username").blur(function () {
                 let username = $(this).val();
@@ -153,13 +152,12 @@
                 $.post("StudentUser/register",$("#form").serialize(),function (resultInfo) {
                     if (resultInfo.status){
                         if (confirm(resultInfo.message)){
-                            window.location.href = "../studentlogin.jsp";
+                            window.location.href = "/TeacherAppointmentSystem_war_exploded/studentlogin.jsp";
                         }else {
                             window.location.href = "/TeacherAppointmentSystem_war_exploded/studentregister.html";
                         }
                     }else {
                         alert(resultInfo.message);
-                        window.location.href = "/TeacherAppointmentSystem_war_exploded/studentregister.html";
                     }
                 },"json");
             });
@@ -175,7 +173,7 @@
 
     <div class="rg_center">
         <div class="rg_form">
-            <form action="/TeacherAppointmentSystem_war_exploded/StudentUser/register" name="form" id="form" method="post">
+            <form  name="form" id="form" method="post">
                 <table >
                     <tr>
                         <td class="td_left"><label for="username">用户名</label></td>
@@ -239,7 +237,7 @@
     </div>
 
     <div class="rg_right">
-        <p>已有账号？<a href="../studentlogin.jsp">立即登录</a></p>
+        <p>已有账号？<a href="/TeacherAppointmentSystem_war_exploded/studentlogin.jsp">立即登录</a></p>
     </div>
 
 </div>

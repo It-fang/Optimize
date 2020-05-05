@@ -63,4 +63,22 @@ public class AdminUserServlet extends BaseServlet {
         request.setAttribute("studentUsers",((List<StudentUser>)resultInfo.getData()));
         return resultInfo;
     }
+
+    public Object agreeRegister(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取参数
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String _studentId = request.getParameter("studentId");
+        int studentId = Integer.parseInt(_studentId);
+        //3,封装studentUser对象
+        StudentUser studentUser = new StudentUser();
+        studentUser.setUsername(username);
+        studentUser.setPassword(password);
+        studentUser.setStudentId(studentId);
+        //4,传入参数
+        Object resultInfo = adminService.agreeRegister(studentUser);
+        return resultInfo;
+    }
 }

@@ -2,6 +2,7 @@ package com.itfang.www.bbl.servic;
 
 import com.itfang.www.dal.po.AdminUser;
 import com.itfang.www.dal.po.ResultInfo;
+import com.itfang.www.dal.po.StudentUser;
 
 import java.sql.SQLException;
 
@@ -19,5 +20,12 @@ public interface AdminService {
      */
     Object login(AdminUser adminUser) throws SQLException;
 
+    /**
+     * 查询所有注册申请
+     * @return
+     * @throws SQLException
+     */
     ResultInfo queryRegister() throws SQLException;
+
+    Object agreeRegister(StudentUser studentUser) throws SQLException;
 }

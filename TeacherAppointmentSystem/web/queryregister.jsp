@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Teacher Appointment System</title>
-
+    <script src="js/jquery-3.4.1.js"></script>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -26,6 +26,29 @@
             text-align: center;
         }
     </style>
+<%--    同意注册申请--%>
+    <script>
+        $(function () {
+            let agrees = document.getElementsByName("agrees");
+            for (let i = 0;i<agrees.length;i++){
+                $(agrees[i]).click(function () {
+                    if (confirm("是否同意用户的注册申请?")){
+                       agreeRegister();
+                    }
+                });
+            }
+        });
+        function agreeRegister(username,password,studentId) {
+            $.post("AdminUser/agreeRegister",{username:username,password:password,studentId:studentId},function (resultInfo) {
+                if (resultInfo.status){
+                    alert(resultInfo.message);
+                    window.location.href = "/TeacherAppointmentSystem_war_exploded/AdminUser/queryRegister";
+                }else {
+                    alert(resultInfo.message);
+                }
+            },"json");
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -49,9 +72,9 @@
                 <td>${studentUser.username}</td>
                 <td>${studentUser.password}</td>
                 <td>
-                    <p href="/TeacherAppointmentSystem_war_exploded/agreeRegisterServlet?username=${studentUser.username}&password=${studentUser.password}&studentId=${studentUser.studentId}" class="btn btn-primary btn-xs active"  role="button">同意</p>
-                    <p href="/TeacherAppointmentSystem_war_exploded/refuseRegisterServlet?studentId=${studentUser.studentId}" class="btn btn-primary btn-xs active"  role="button" > 拒绝</p>
-                    <p href="/TeacherAppointmentSystem_war_exploded/refuseRegisterServlet?studentId=${studentUser.studentId}" class="btn btn-primary btn-xs active"  role="button" > 详情</p>
+                    <a id="agrees" name="agrees" href="javascript:agreeRegister('${studentUser.username}','${studentUser.password}','${studentUser.studentId}')" class="btn btn-primary btn-xs active"  role="button">同意</a>
+                    <a id="refuse" href="/TeacherAppointmentSystem_war_exploded/AdminUser/refuseRegister?studentId=${studentUser.studentId}" class="btn btn-primary btn-xs active"  role="button" > 拒绝</a>
+                    <a id="check" href="/TeacherAppointmentSystem_war_exploded/AdminUser/checkDetail?studentId=${studentUser.studentId}" class="btn btn-primary btn-xs active"  role="button" > 详情</a>
                 </td>
             </tr>
         </c:forEach>
