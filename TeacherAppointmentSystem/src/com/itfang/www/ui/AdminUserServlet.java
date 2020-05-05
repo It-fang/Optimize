@@ -3,6 +3,9 @@ package com.itfang.www.ui;
 import com.itfang.www.bbl.servic.AdminService;
 import com.itfang.www.bbl.servic.AdminServiceImpl;
 import com.itfang.www.dal.po.AdminUser;
+import com.itfang.www.dal.po.Application;
+import com.itfang.www.dal.po.ResultInfo;
+import com.itfang.www.dal.po.StudentUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author it-fang
@@ -19,6 +23,15 @@ import java.sql.SQLException;
 public class AdminUserServlet extends BaseServlet {
     AdminService adminService = new AdminServiceImpl();
 
+    /**
+     * 登陆管理员账号
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
     public Object login(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");
@@ -33,6 +46,21 @@ public class AdminUserServlet extends BaseServlet {
         Object resultInfo = adminService.login(adminUser);
         //5,将管理员用户存入Session域中
         request.getSession().setAttribute("adminUser",adminUser);
+        return resultInfo;
+    }
+
+    /**
+     * 查询注册申请并存入request域中
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
+    public Object queryRegister(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
+        ResultInfo resultInfo = adminService.queryRegister();
+        request.setAttribute("studentUsers",((List<StudentUser>)resultInfo.getData()));
         return resultInfo;
     }
 }

@@ -34,7 +34,7 @@
         <a href="/TeacherAppointmentSystem_war_exploded/teacherregister.html" class="btn btn-primary active" role="button">注册教师用户</a>
     </div>
     <div style="float:right; margin: 5px;">
-        <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/queryRegisterApplicationServlet" role="button">显示所有注册申请</a>
+        <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/AdminUser/queryRegister" role="button">显示所有注册申请</a>
     </div>
     <table border="1" class="table table-bordered table-hover">
         <tr class="success">

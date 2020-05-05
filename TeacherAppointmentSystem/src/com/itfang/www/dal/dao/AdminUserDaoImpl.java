@@ -14,6 +14,12 @@ import java.sql.SQLException;
  */
 public class AdminUserDaoImpl implements AdminUserDao {
 
+    /**
+     * 判断传入的用户名是否在数据库中
+     * @param username
+     * @return
+     * @throws SQLException
+     */
     @Override
     public boolean isExit(String username) throws SQLException {
         Connection conn = JdbcUtil.getConnection();
@@ -34,6 +40,12 @@ public class AdminUserDaoImpl implements AdminUserDao {
         return status;
     }
 
+    /**
+     * 判断用户名对应的密码是否正确
+     * @param adminUser
+     * @return
+     * @throws SQLException
+     */
     @Override
     public boolean checkPassword(AdminUser adminUser) throws SQLException {
         Connection conn = JdbcUtil.getConnection();

@@ -2,10 +2,15 @@ package com.itfang.www.bbl.servic;
 
 import com.itfang.www.dal.dao.AdminUserDao;
 import com.itfang.www.dal.dao.AdminUserDaoImpl;
+import com.itfang.www.dal.dao.RegisterApplicationDao;
+import com.itfang.www.dal.dao.RegisterApplicationDaoImpl;
 import com.itfang.www.dal.po.AdminUser;
 import com.itfang.www.dal.po.ResultInfo;
+import com.itfang.www.dal.po.StudentUser;
 
 import java.sql.SQLException;
+import java.util.List;
+
 
 /**
  * @author it-fang
@@ -14,8 +19,15 @@ import java.sql.SQLException;
  */
 public class AdminServiceImpl implements AdminService {
     AdminUserDao adminUserDao = new AdminUserDaoImpl();
+    RegisterApplicationDao registerApplicationDao = new RegisterApplicationDaoImpl();
     ResultInfo resultInfo = new ResultInfo();
 
+    /**
+     * 登陆管理员账号
+     * @param adminUser
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object login(AdminUser adminUser) throws SQLException {
         if ("".equals(adminUser.getUsername())){
@@ -41,6 +53,19 @@ public class AdminServiceImpl implements AdminService {
         }else {
             resultInfo.setStatus(false);
             resultInfo.setMessage("用户不存在！");
+        }
+        return resultInfo;
+    }
+
+    @Override
+    public ResultInfo queryRegister() throws SQLException {
+        List<StudentUser> studentUsers = registerApplicationDao.listRegisterApplication();
+        if (studentUsers == null){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("没有任何注册申请!");
+        }else {
+            resultInfo.setStatus(true);
+            resultInfo.setData(studentUsers);
         }
         return resultInfo;
     }

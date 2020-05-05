@@ -106,7 +106,7 @@ public class StudentUserDaoImpl implements StudentUserDao{
     public boolean saveStudentUser(StudentUser studentUser) throws SQLException {
         Connection conn = JdbcUtil.getConnection();
         String sql = "" +
-                "insert into student_user " +
+                "insert into register_application " +
                 "(username,password,student_id)   " +
                 "value (?,?,?)";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
