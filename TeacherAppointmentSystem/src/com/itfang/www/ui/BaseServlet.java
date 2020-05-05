@@ -56,6 +56,10 @@ public class BaseServlet extends HttpServlet {
                 request.getRequestDispatcher("/modify.jsp").forward(request,response);
                 return;
             }
+            if (requestName.contains("queryRegister")){
+                request.getRequestDispatcher("/queryregister.jsp").forward(request,response);
+                return;
+            }
             ObjectMapper objectMapper = new ObjectMapper();
             // 设置编码格式
             response.setContentType("application/json;charset=utf-8");
