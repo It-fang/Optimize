@@ -57,4 +57,6 @@ public interface StudentUserDao {
      * @throws SQLException
      */
     Student getStudent(int studentId) throws SQLException;
+
+    boolean deleteStudent(int studentId) throws SQLException;
 }

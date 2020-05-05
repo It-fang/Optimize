@@ -28,25 +28,32 @@
     </style>
 <%--    同意注册申请--%>
     <script>
-        $(function () {
-            let agrees = document.getElementsByName("agrees");
-            for (let i = 0;i<agrees.length;i++){
-                $(agrees[i]).click(function () {
-                    if (confirm("是否同意用户的注册申请?")){
-                       agreeRegister();
-                    }
-                });
-            }
-        });
         function agreeRegister(username,password,studentId) {
-            $.post("AdminUser/agreeRegister",{username:username,password:password,studentId:studentId},function (resultInfo) {
-                if (resultInfo.status){
-                    alert(resultInfo.message);
-                    window.location.href = "/TeacherAppointmentSystem_war_exploded/AdminUser/queryRegister";
-                }else {
-                    alert(resultInfo.message);
-                }
-            },"json");
+            if (confirm("是否同意该用户的注册申请?")){
+                $.post("AdminUser/agreeRegister",{username:username,password:password,studentId:studentId},function (resultInfo) {
+                    if (resultInfo.status){
+                        alert(resultInfo.message);
+                        window.location.href = "/TeacherAppointmentSystem_war_exploded/AdminUser/queryRegister";
+                    }else {
+                        alert(resultInfo.message);
+                    }
+                },"json");
+            }
+        }
+    </script>
+<%--    拒绝注册申请--%>
+    <script>
+        function refuseRegister(studentId) {
+            if (confirm("是否拒绝用户的注册申请?")){
+                $.post("AdminUser/refuseRegister",{studentId:studentId},function (resultInfo) {
+                    if (resultInfo.status){
+                        alert(resultInfo.message);
+                        window.location.href = "/TeacherAppointmentSystem_war_exploded/AdminUser/queryRegister";
+                    }else {
+                        alert(resultInfo.message);
+                    }
+                },"json");
+            }
         }
     </script>
 </head>
@@ -73,8 +80,7 @@
                 <td>${studentUser.password}</td>
                 <td>
                     <a id="agrees" name="agrees" href="javascript:agreeRegister('${studentUser.username}','${studentUser.password}','${studentUser.studentId}')" class="btn btn-primary btn-xs active"  role="button">同意</a>
-                    <a id="refuse" href="/TeacherAppointmentSystem_war_exploded/AdminUser/refuseRegister?studentId=${studentUser.studentId}" class="btn btn-primary btn-xs active"  role="button" > 拒绝</a>
-                    <a id="check" href="/TeacherAppointmentSystem_war_exploded/AdminUser/checkDetail?studentId=${studentUser.studentId}" class="btn btn-primary btn-xs active"  role="button" > 详情</a>
+                    <a id="refuses" name="refuses" href="javascript:refuseRegister('${studentUser.studentId}')" class="btn btn-primary btn-xs active"  role="button" > 拒绝</a>
                 </td>
             </tr>
         </c:forEach>

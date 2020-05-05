@@ -41,6 +41,12 @@ public class RegisterApplicationDaoImpl implements RegisterApplicationDao {
         return studentUsers;
     }
 
+    /**
+     * 将studentUser对象存入数据库的student_user表中
+     * @param studentUser
+     * @return
+     * @throws SQLException
+     */
     @Override
     public boolean saveStudentUser(StudentUser studentUser) throws SQLException {
         Connection conn = JdbcUtil.getConnection();
@@ -57,14 +63,20 @@ public class RegisterApplicationDaoImpl implements RegisterApplicationDao {
         return true;
     }
 
+    /**
+     * 根据studentId删除register_application表中对应字段
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public boolean deleteRegisterApplication(StudentUser studentUser) throws SQLException {
+    public boolean deleteRegisterApplication(int studentId) throws SQLException {
         Connection conn = JdbcUtil.getConnection();
         String sql = "" +
                 "delete from register_application " +
                 "where student_id = ?";
         PreparedStatement preparedStatement =conn.prepareStatement(sql);
-        preparedStatement.setInt(1,studentUser.getStudentId());
+        preparedStatement.setInt(1,studentId);
         preparedStatement.execute();
         JdbcUtil.close(preparedStatement,conn);
         return true;

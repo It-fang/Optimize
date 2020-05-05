@@ -27,5 +27,13 @@ public interface AdminService {
      */
     ResultInfo queryRegister() throws SQLException;
 
+    /**
+     * 同意注册申请
+     * @param studentUser
+     * @return
+     * @throws SQLException
+     */
     Object agreeRegister(StudentUser studentUser) throws SQLException;
+
+    Object refuseRegister(int studentId) throws SQLException;
 }

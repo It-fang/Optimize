@@ -173,4 +173,17 @@ public class StudentUserDaoImpl implements StudentUserDao{
         JdbcUtil.close(resultSet,preparedStatement,conn);
         return student;
     }
+
+    @Override
+    public boolean deleteStudent(int studentId) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "delete from student " +
+                "where id = ?";
+        PreparedStatement preparedStatement =conn.prepareStatement(sql);
+        preparedStatement.setInt(1,studentId);
+        preparedStatement.execute();
+        JdbcUtil.close(preparedStatement,conn);
+        return true;
+    }
 }

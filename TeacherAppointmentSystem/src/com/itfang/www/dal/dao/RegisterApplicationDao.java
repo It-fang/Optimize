@@ -17,7 +17,20 @@ public interface RegisterApplicationDao {
      */
     List<StudentUser> listRegisterApplication() throws SQLException;
 
+    /**
+     * 将studentUser对象存入数据库的student_user表中
+     * @param studentUser
+     * @return
+     * @throws SQLException
+     */
     boolean saveStudentUser(StudentUser studentUser) throws SQLException;
 
-    boolean deleteRegisterApplication(StudentUser studentUser) throws SQLException;
+    /**
+     * 根据studentId删除register_application表中对应字段
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
+    boolean deleteRegisterApplication(int studentId) throws SQLException;
+
 }

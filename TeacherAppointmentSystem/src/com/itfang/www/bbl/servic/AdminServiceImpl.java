@@ -1,9 +1,6 @@
 package com.itfang.www.bbl.servic;
 
-import com.itfang.www.dal.dao.AdminUserDao;
-import com.itfang.www.dal.dao.AdminUserDaoImpl;
-import com.itfang.www.dal.dao.RegisterApplicationDao;
-import com.itfang.www.dal.dao.RegisterApplicationDaoImpl;
+import com.itfang.www.dal.dao.*;
 import com.itfang.www.dal.po.AdminUser;
 import com.itfang.www.dal.po.ResultInfo;
 import com.itfang.www.dal.po.StudentUser;
@@ -75,11 +72,17 @@ public class AdminServiceImpl implements AdminService {
         return resultInfo;
     }
 
+    /**
+     * 同意注册申请
+     * @param studentUser
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object agreeRegister(StudentUser studentUser) throws SQLException {
         boolean status = registerApplicationDao.saveStudentUser(studentUser);
         if (status){
-            status = registerApplicationDao.deleteRegisterApplication(studentUser);
+            status = registerApplicationDao.deleteRegisterApplication(studentUser.getStudentId());
             if (status){
                 resultInfo.setStatus(true);
                 resultInfo.setMessage("成功同意该用户的注册申请");
@@ -90,6 +93,26 @@ public class AdminServiceImpl implements AdminService {
         }else {
             resultInfo.setStatus(false);
             resultInfo.setMessage("同意失败");
+        }
+        return resultInfo;
+    }
+
+    @Override
+    public Object refuseRegister(int studentId) throws SQLException {
+        boolean status = registerApplicationDao.deleteRegisterApplication(studentId);
+        if (status){
+            StudentUserDao studentUserDao = new StudentUserDaoImpl();
+            status = studentUserDao.deleteStudent(studentId);
+            if (status){
+                resultInfo.setStatus(true);
+                resultInfo.setMessage("拒绝成功!");
+            }else {
+                resultInfo.setStatus(false);
+                resultInfo.setMessage("拒绝失败!");
+            }
+        }else {
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("拒绝失败!");
         }
         return resultInfo;
     }
