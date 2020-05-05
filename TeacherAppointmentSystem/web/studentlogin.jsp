@@ -56,10 +56,8 @@
                         window.location.href = "/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher"
                     }else {
                         alert(resultInfo.message);
-                        window.location.href = "/TeacherAppointmentSystem_war_exploded/studentlogin.jsp"
                     }
                 },"json");
-
             });
         });
     </script>
@@ -84,7 +82,7 @@
         <input type="button" id="button" class="btn btn-primary btn-block" style="margin-top: 150px" value="学生登陆 ">
 
     </form>
-    <a href="StudentUser/studentregister.html" style="margin-right: 10px">学生注册</a><br><br><br>
+    <a href="/TeacherAppointmentSystem_war_exploded//studentregister.html" style="margin-right: 10px">学生注册</a><br><br><br>
     <h7>--------------------其他用户登陆------------------</h7>
     <p style="margin-left: 70px">
         <a href="teacherlogin.jsp" class="btn btn-info active"  role="button">教师登陆</a>

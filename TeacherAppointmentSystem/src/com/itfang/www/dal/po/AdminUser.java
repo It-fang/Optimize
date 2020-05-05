@@ -4,7 +4,7 @@ package com.itfang.www.dal.po;
  * @@author it-fang
  * 超级用户对象
  */
-public class Admin {
+public class AdminUser {
     private int id;
     private String username;
     private String password;

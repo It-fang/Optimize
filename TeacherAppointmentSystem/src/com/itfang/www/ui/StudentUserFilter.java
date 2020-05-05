@@ -11,7 +11,6 @@ import java.io.IOException;
  */
 @WebFilter(urlPatterns = {"/StudentUser/*","/queryteacher.jsp","/queryresult.jsp","/application.jsp"})
 public class StudentUserFilter implements Filter {
-
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         //1,强制转换

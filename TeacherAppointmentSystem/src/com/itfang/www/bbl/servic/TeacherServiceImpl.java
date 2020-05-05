@@ -247,6 +247,13 @@ public class TeacherServiceImpl implements TeacherService {
         return resultInfo;
     }
 
+    /**
+     * 教师同意所选的请求
+     * @param teacherId
+     * @param studentIds
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object agreeSelect(int teacherId, String[] studentIds) throws SQLException {
         if (studentIds.length == 0){

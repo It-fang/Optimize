@@ -46,10 +46,26 @@
         left:50px;
     }
 </style>
+    <%--    判断登陆是否成功--%>
+    <script>
+        $(function () {
+            $("#button").click(function () {
+                $.post("AdminUser/login",$("#form").serialize(),function (resultInfo) {
+                    if (resultInfo.status){
+                        alert(resultInfo.message);
+                        window.location.href = "/TeacherAppointmentSystem_war_exploded/AdminUser/queryRegister"
+                    }else {
+                        alert(resultInfo.message);
+                    }
+                },"json");
+            });
+        });
+    </script>
+
 </head>
 <body>
 <div class= "rg_layout">
-    <form class="form-horizontal form-inline" action="/TeacherAppointmentSystem_war_exploded/adminLoginServlet" method="post">
+    <form class="form-horizontal form-inline" id="form" method="post">
             <div class="td_text">
                 <div class="form-group">
                     <label for="username" class="row-cols-3 control-label">用户名:</label>
@@ -64,7 +80,7 @@
                     </div>
                 </div>
             </div>
-        <input type="submit" class="btn btn-primary btn-block" style="margin-top: 150px" value="管理员登陆 ">
+        <input type="button" id="button" class="btn btn-primary btn-block" style="margin-top: 150px" value="管理员登陆 ">
 
     </form>
     <br><br><br>

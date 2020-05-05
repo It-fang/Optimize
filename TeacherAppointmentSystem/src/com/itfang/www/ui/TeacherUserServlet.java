@@ -257,7 +257,16 @@ public class TeacherUserServlet extends BaseServlet {
         return resultInfo;
     }
 
-
+    /**
+     * 教师同意所选预约请求
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     * @throws ParseException
+     */
     public Object agreeSelect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");

@@ -90,5 +90,12 @@ public interface TeacherService {
      */
     Object updateTeacher(Teacher teacher,int teacherId) throws SQLException;
 
+    /**
+     * 教师同意所选的预约请求
+     * @param teacherId
+     * @param studentIds
+     * @return
+     * @throws SQLException
+     */
     Object agreeSelect(int teacherId, String[] studentIds) throws SQLException;
 }

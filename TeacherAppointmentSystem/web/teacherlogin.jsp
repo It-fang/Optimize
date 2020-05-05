@@ -56,7 +56,6 @@
                         window.location.href = "/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication"
                     }else {
                         alert(resultInfo.message);
-                        window.location.href = "/TeacherAppointmentSystem_war_exploded/teacherlogin.jsp"
                     }
                 },"json");
             });
