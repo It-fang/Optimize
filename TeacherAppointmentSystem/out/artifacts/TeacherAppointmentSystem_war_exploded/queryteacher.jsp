@@ -46,6 +46,9 @@
         <div style="float:right; margin: 5px;">
             <a class="btn  btn-success" href="/TeacherAppointmentSystem_war_exploded/queryresult.jsp" role="button">显示所有预约结果</a>
         </div>
+        <div style="float:right; margin: 5px;">
+            <a class="btn  btn-success" href="/TeacherAppointmentSystem_war_exploded/StudentUser/studentEnterChatRoom" role="button">进入聊天室</a>
+        </div>
     </form>
     <table border="1" class="table table-bordered table-hover">
         <tr class="success">

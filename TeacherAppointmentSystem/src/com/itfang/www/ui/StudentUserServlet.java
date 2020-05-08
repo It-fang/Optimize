@@ -1,5 +1,6 @@
 package com.itfang.www.ui;
 
+import com.google.gson.Gson;
 import com.itfang.www.bbl.servic.StudentService;
 import com.itfang.www.bbl.servic.StudentServiceImpl;
 import com.itfang.www.dal.po.*;
@@ -222,5 +223,16 @@ public class StudentUserServlet extends BaseServlet {
         ResultInfo resultInfo = (ResultInfo) studentService.queryResult(studentId);
         request.getSession().setAttribute("applications",(List<Application>)resultInfo.getData());
         return resultInfo;
+    }
+
+    public Object studentEnterChatRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取请求参数
+        StudentUser studentUser = (StudentUser) request.getSession().getAttribute("studentUser");
+        String username = studentUser.getUsername();
+        //3,将username存入Session中
+        request.getSession().setAttribute("username",username);
+        return null;
     }
 }

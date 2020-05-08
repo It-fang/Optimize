@@ -86,6 +86,9 @@
     <div style="float:right; margin: 5px;">
         <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication" role="button">显示所有预约申请</a>
     </div>
+    <div style="float:right; margin: 5px;">
+        <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/teacherEnterChatRoom" role="button">进入聊天室</a>
+    </div>
     <div style="float:left; margin: 10px;">
         <a class="btn btn-primary"  id="agreeSelect" role="button">同意所选预约申请</a>
     </div>

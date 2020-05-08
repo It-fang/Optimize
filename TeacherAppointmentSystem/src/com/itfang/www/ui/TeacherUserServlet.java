@@ -278,4 +278,15 @@ public class TeacherUserServlet extends BaseServlet {
         Object resultInfo = teacherService.agreeSelect(teacherId,studentIds);
         return resultInfo;
     }
+
+    public Object teacherEnterChatRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取请求参数
+        TeacherUser teacherUser = (TeacherUser) request.getSession().getAttribute("teacherUser");
+        String username = teacherUser.getUsername();
+        //3,将username存入Session中
+        request.getSession().setAttribute("username",username);
+        return null;
+    }
 }

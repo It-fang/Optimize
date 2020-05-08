@@ -60,6 +60,11 @@ public class BaseServlet extends HttpServlet {
                 request.getRequestDispatcher("/queryregister.jsp").forward(request,response);
                 return;
             }
+            if (requestName.contains("studentEnterChatRoom") || requestName.contains("teacherEnterChatRoom")){
+                response.sendRedirect("/TeacherAppointmentSystem_war_exploded/chatroom.jsp");
+                return;
+            }
+
             ObjectMapper objectMapper = new ObjectMapper();
             // 设置编码格式
             response.setContentType("application/json;charset=utf-8");
