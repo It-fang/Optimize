@@ -1,8 +1,12 @@
 package com.itfang.www.bbl.servic;
 
 import com.itfang.www.dal.po.*;
+import org.apache.commons.fileupload.FileItem;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,11 +52,11 @@ public interface StudentService {
 
     /**
      * 判断预约请求信息是否完整,并存入数据库中
-     * @param application
+     * @param fileItems,realPath,studentUser
      * @return resultInfo
      * @throws SQLException
      */
-    Object apply(Application application) throws SQLException;
+    Object apply(List<FileItem> fileItems,String realPath,StudentUser studentUser) throws SQLException, IOException;
 
     /**
      * 查询预约结果

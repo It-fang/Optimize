@@ -4,6 +4,10 @@ import com.google.gson.Gson;
 import com.itfang.www.bbl.servic.StudentService;
 import com.itfang.www.bbl.servic.StudentServiceImpl;
 import com.itfang.www.dal.po.*;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -164,7 +168,7 @@ public class StudentUserServlet extends BaseServlet {
     }
 
     /**
-     * 接收预约请求
+     * 接收预约请求并上传图片
      * @param request
      * @param response
      * @return resultInfo
@@ -173,33 +177,54 @@ public class StudentUserServlet extends BaseServlet {
      * @throws SQLException
      * @throws ParseException
      */
-    public Object apply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
-        //1,设置编码
-        request.setCharacterEncoding("utf-8");
-        //2,获取请求参数
-        String _teacherId = (String) request.getSession().getAttribute("teacherId");
-        int teacherId = Integer.parseInt(_teacherId);
-        String teacherName = (String) request.getSession().getAttribute("teacherName");
+    public Object apply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException, FileUploadException {
+//        //1,设置编码
+////        request.setCharacterEncoding("utf-8");
+////        //2,获取请求参数
+////        String _teacherId = (String) request.getSession().getAttribute("teacherId");
+////        int teacherId = Integer.parseInt(_teacherId);
+////        String teacherName = (String) request.getSession().getAttribute("teacherName");
+////        StudentUser studentUser = (StudentUser) request.getSession().getAttribute("studentUser");
+////        int studentId = studentUser.getStudentId();
+////        String studentName = request.getParameter("name");
+////        String studentNumber = request.getParameter("number");
+////        String _applyTime = request.getParameter("time");
+////        Date applyTime = null;
+////        if (!(_applyTime == null || "".equals(_applyTime))){
+////            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+////            applyTime = simpleDateFormat.parse(_applyTime);
+////        }
+////        //3,封装申请表对象
+////        Application application = new Application();
+////        application.setTeacherId(teacherId);
+////        application.setTeacherName(teacherName);
+////        application.setStudentId(studentId);
+////        application.setStudentName(studentName);
+////        application.setStudentNumber(studentNumber);
+////        application.setApplyTime(applyTime);
+////        //4,传入参数
+////        Object resultInfo = studentService.apply(application);
+////        return resultInfo;
+        //1,获取项目部署的真实路径
+        String realPath = this.getServletContext().getRealPath("WEB-INF/upload");
         StudentUser studentUser = (StudentUser) request.getSession().getAttribute("studentUser");
-        int studentId = studentUser.getStudentId();
-        String studentName = request.getParameter("name");
-        String studentNumber = request.getParameter("number");
-        String _applyTime = request.getParameter("time");
-        Date applyTime = null;
-        if (!(_applyTime == null || "".equals(_applyTime))){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            applyTime = simpleDateFormat.parse(_applyTime);
+        //1,创建DiskFileItemFactory工厂
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        //2,创建一个文件上传解析器
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        //3,解决上传文件名乱码问题
+        upload.setHeaderEncoding("UTF-8");
+        //4,判断enctype是否为Multipart类型的表单数据
+        if (!ServletFileUpload.isMultipartContent(request)){
+            ResultInfo resultInfo = new ResultInfo();
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("提交失败！");
+            return resultInfo;
         }
-        //3,封装申请表对象
-        Application application = new Application();
-        application.setTeacherId(teacherId);
-        application.setTeacherName(teacherName);
-        application.setStudentId(studentId);
-        application.setStudentName(studentName);
-        application.setStudentNumber(studentNumber);
-        application.setApplyTime(applyTime);
-        //4,传入参数
-        Object resultInfo = studentService.apply(application);
+        //5,获取表单输入项集合List<fileItem>
+        List<FileItem> fileItems = upload.parseRequest(request);
+        //6,将表单输入项集合,项目部署的真实路径,学生用户对象传入到服务层
+        Object resultInfo = studentService.apply(fileItems,realPath,studentUser);
         return resultInfo;
     }
 
@@ -225,6 +250,16 @@ public class StudentUserServlet extends BaseServlet {
         return resultInfo;
     }
 
+    /**
+     * 学生用户进入聊天室进行聊天操作
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     * @throws ParseException
+     */
     public Object studentEnterChatRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");

@@ -2,8 +2,11 @@ package com.itfang.www.bbl.servic;
 
 import com.itfang.www.dal.dao.*;
 import com.itfang.www.dal.po.*;
+import org.apache.commons.fileupload.FileItem;
 
+import java.io.*;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -162,22 +165,75 @@ public class StudentServiceImpl implements StudentService {
 
     /**
      * 判断预约请求信息是否完整,并存入数据库中
-     * @param application
+     * @param fileItems,realPath,studentUser
      * @return resultInfo
      * @throws SQLException
      */
     @Override
-    public Object apply(Application application) throws SQLException {
-        if ("".equals(application.getTeacherId()) || "".equals(application.getTeacherName()) || "".equals(application.getStudentName()) || "".equals(application.getStudentNumber()) || "".equals(application.getStudentId()) || "".equals(application.getApplyTime()) || application.getApplyTime() ==null){
-            resultInfo.setStatus(false);
-            resultInfo.setMessage("请将预约信息填完整！");
-            return resultInfo;
+    public Object apply(List<FileItem> fileItems,String realPath,StudentUser studentUser) throws SQLException, IOException {
+//        if ("".equals(application.getTeacherId()) || "".equals(application.getTeacherName()) || "".equals(application.getStudentName()) || "".equals(application.getStudentNumber()) || "".equals(application.getStudentId()) || "".equals(application.getApplyTime()) || application.getApplyTime() ==null){
+//            resultInfo.setStatus(false);
+//            resultInfo.setMessage("请将预约信息填完整！");
+//            return resultInfo;
+//        }
+//        ApplicationDao applicationDao = new ApplicationDaoImpl();
+//        boolean status = applicationDao.saveApplication(application);
+//        resultInfo.setStatus(status);
+//        resultInfo.setMessage("预约请求发送成功,等待教师处理!");
+//        return resultInfo;
+
+        //存放普通字段的参数
+        Map<String,String> params = new HashMap<String, String>(10);
+        //存到服务器的路径
+        String filePath = null;
+        File file = new File(realPath);
+        //判断存储位置的目录是否存在,不存在则创建
+        if(!file.exists()&&!file.isDirectory()){
+            file.mkdir();
         }
-        ApplicationDao applicationDao = new ApplicationDaoImpl();
-        boolean status = applicationDao.saveApplication(application);
-        resultInfo.setStatus(status);
-        resultInfo.setMessage("预约请求发送成功,等待教师处理!");
-        return resultInfo;
+        //完成文件上传内容
+        for (FileItem fileItem : fileItems){
+            //如果是表单的普通字段,则存入params集合中
+            if (fileItem.isFormField()){
+                String key = fileItem.getFieldName();
+                String value = fileItem.getString("UTF-8");
+                if (value == null || "".equals(value)){
+                    resultInfo.setMessage("请将预约信息填写完整!");
+                    resultInfo.setStatus(false);
+                    return resultInfo;
+                }
+                params.put(key,value);
+            }else{
+                String fileName = fileItem.getName();
+                if (fileName.contains(":")){
+                    fileName = fileName.substring(fileName.indexOf("\\"+1));
+                }
+                if (fileName == null || "".equals(fileName.trim())){
+                    continue;
+                }
+                //拼接保存到服务器的路径,存放路径+文件名
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                String ms = df.format(new Date());
+
+                filePath = realPath + "\\" + ms + fileName;
+                //构建输入输出流
+                InputStream in = fileItem.getInputStream();
+                OutputStream out = new FileOutputStream(filePath);
+                byte[] b = new byte[10*1024*1024];
+                int len = -1;
+                while ((len = in.read(b)) != -1){
+                    out.write(b,0,len);
+                }
+                out.close();
+                in.close();
+                fileItem.delete();
+            }
+        }
+
+        Application application = new Application();
+
+
+        return null;
     }
 
     /**

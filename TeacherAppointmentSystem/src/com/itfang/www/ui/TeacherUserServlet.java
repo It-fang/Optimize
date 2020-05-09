@@ -279,6 +279,15 @@ public class TeacherUserServlet extends BaseServlet {
         return resultInfo;
     }
 
+    /**
+     * 教师用户进入聊天室进行聊天操作
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
     public Object teacherEnterChatRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");
