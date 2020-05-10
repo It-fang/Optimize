@@ -64,28 +64,28 @@
 </head>
 <body>
 <div class= "rg_layout">
-    <form class="form-horizontal form-inline" id="form" action="/TeacherAppointmentSystem_war_exploded/teacherLoginServlet" method="post">
-            <div class="td_text">
-                <div class="form-group">
-                    <label for="username" class="row-cols-3 control-label">用户名:</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control " id="username" name="username" placeholder="请输入用户名">
-                    </div>
-                </div><br>
-                <div class="form-group">
-                    <label for="password" class="row-cols-1 control-label">密码:</label>
-                    <div class="col-sm-2 td_text_password">
-                        <input type="password" class="form-control " id="password" name="password" placeholder="请输入密码">
-                    </div>
+    <form class="form-group" id="form" action="/TeacherAppointmentSystem_war_exploded/teacherLoginServlet" method="post">
+        <div style="margin-top: 30px">
+            <div class="row">
+                <label for="username" class="col-xl-3 control-label">用户名:</label>
+                <div class="col-sm-2">
+                    <input type="text"  id="username" name="username" placeholder="请输入用户名">
+                </div>
+            </div><br>
+            <div class="row">
+                <label for="password" class="col-xl-3 control-label">密码:</label>
+                <div class="col-sm-2">
+                    <input type="password"  id="password" name="password" placeholder="请输入密码">
                 </div>
             </div>
-        <input type="button" id="button" class="btn btn-primary btn-block" style="margin-top: 150px" value="教师登陆 ">
+        </div>
+        <input type="button" id="button" class="btn btn-primary btn-block" style="margin-top: 50px" value="教师登陆 ">
     </form>
     <br><br><br>
     <h7>--------------------其他用户登陆------------------</h7>
-    <p style="margin-left: 70px">
+    <p style="margin-left: 30px">
         <a href="studentlogin.jsp" class="btn btn-info active" role="button">学生登陆</a>
-        <a href="adminlogin.jsp" class="btn btn-info     active" role="button">管理员登陆</a>
+        <a href="adminlogin.jsp" class="btn btn-info active" role="button">管理员登陆</a>
     </p>
     <c:if test="${msg != null}">
         <span style="margin-left:70px ;background-color: yellow">${msg}</span>
