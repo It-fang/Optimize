@@ -30,6 +30,9 @@
 
 </head>
 <body>
-<img src="upload/20200509231636327下载.jpg" alt="hai">
+<img src="upload\20200509231636327下载.jpg" height="10" width="10">
+<form></form>
+<img id="image" src="upload\20200509231636327下载.jpg" height="20" width="20" >
+
 </body>
 </html>

@@ -53,9 +53,13 @@ public interface StudentService {
 
     /**
      * 判断预约请求信息是否完整,并存入数据库中
-     * @param fileItems,realPath,studentUser
-     * @return resultInfo
+     * @param fileItems
+     * @param realPath
+     * @param studentUser
+     * @return
      * @throws SQLException
+     * @throws IOException
+     * @throws ParseException
      */
     Object apply(List<FileItem> fileItems,String realPath,StudentUser studentUser) throws SQLException, IOException, ParseException;
 

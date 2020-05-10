@@ -166,23 +166,16 @@ public class StudentServiceImpl implements StudentService {
 
     /**
      * 判断预约请求信息是否完整,并存入数据库中
-     * @param fileItems,realPath,studentUser
-     * @return resultInfo
+     * @param fileItems
+     * @param realPath
+     * @param studentUser
+     * @return
      * @throws SQLException
+     * @throws IOException
+     * @throws ParseException
      */
     @Override
     public Object apply(List<FileItem> fileItems,String realPath,StudentUser studentUser) throws SQLException, IOException, ParseException {
-//        if ("".equals(application.getTeacherId()) || "".equals(application.getTeacherName()) || "".equals(application.getStudentName()) || "".equals(application.getStudentNumber()) || "".equals(application.getStudentId()) || "".equals(application.getApplyTime()) || application.getApplyTime() ==null){
-//            resultInfo.setStatus(false);
-//            resultInfo.setMessage("请将预约信息填完整！");
-//            return resultInfo;
-//        }
-//        ApplicationDao applicationDao = new ApplicationDaoImpl();
-//        boolean status = applicationDao.saveApplication(application);
-//        resultInfo.setStatus(status);
-//        resultInfo.setMessage("预约请求发送成功,等待教师处理!");
-//        return resultInfo;
-
         //存放普通字段的参数
         Map<String,String> params = new HashMap<String, String>(10);
         //存到服务器的路径

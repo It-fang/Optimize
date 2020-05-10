@@ -3,6 +3,7 @@ package com.itfang.www.bbl.servic;
 import com.itfang.www.dal.po.ResultInfo;
 import com.itfang.www.dal.po.Teacher;
 import com.itfang.www.dal.po.TeacherUser;
+import com.itfang.www.dal.po.Upload;
 
 import java.sql.SQLException;
 
@@ -98,4 +99,6 @@ public interface TeacherService {
      * @throws SQLException
      */
     Object agreeSelect(int teacherId, String[] studentIds) throws SQLException;
+
+    Upload getUpload(int studentId) throws SQLException;
 }

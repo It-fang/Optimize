@@ -64,7 +64,10 @@ public class BaseServlet extends HttpServlet {
                 response.sendRedirect("/TeacherAppointmentSystem_war_exploded/chatroom.jsp");
                 return;
             }
-
+            if (requestName.contains("checkDetail")){
+                response.sendRedirect("/TeacherAppointmentSystem_war_exploded/checkdetail.jsp");
+                return;
+            }
             ObjectMapper objectMapper = new ObjectMapper();
             // 设置编码格式
             response.setContentType("application/json;charset=utf-8");

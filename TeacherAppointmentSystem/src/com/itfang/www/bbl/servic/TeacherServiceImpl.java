@@ -277,4 +277,11 @@ public class TeacherServiceImpl implements TeacherService {
         }
         return resultInfo;
     }
+
+    @Override
+    public Upload getUpload(int studentId) throws SQLException {
+        UploadDao uploadDao = new UploadDaoImpl();
+        Upload upload = uploadDao.getUpload(studentId);
+        return upload;
+    }
 }

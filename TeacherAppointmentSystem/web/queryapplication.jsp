@@ -107,7 +107,7 @@
             <tr>
                 <td><input type="checkbox" name="studentIds" id="box" value="${application.studentId}"></td>
                 <td>${s.count}</td>
-                <td>${application.studentName}</td>
+                <td><a href="<%=request.getContextPath()%>/TeacherUser/checkDetail?studentId=${application.studentId}">${application.studentName}</a></td>
                 <td>${application.studentNumber}</td>
                 <td>${application.applyTime}</td>
                 <td>${application.ifAgree}</td>

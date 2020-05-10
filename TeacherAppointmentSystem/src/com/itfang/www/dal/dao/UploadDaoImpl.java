@@ -3,10 +3,7 @@ package com.itfang.www.dal.dao;
 import com.itfang.www.dal.po.Upload;
 import com.itfang.www.util.JdbcUtil;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * @author it-fang
@@ -32,5 +29,23 @@ public class UploadDaoImpl implements UploadDao {
         preparedStatement.execute();
         JdbcUtil.close(preparedStatement,conn);
         return true;
+    }
+
+    @Override
+    public Upload getUpload(int studentId) throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "select * from upload where student_id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1,studentId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Upload upload = new Upload();
+        while(resultSet.next()){
+            upload.setId(resultSet.getInt("id"));
+            upload.setFileName(resultSet.getString("file_name"));
+            upload.setStudentId(studentId);
+        }
+        JdbcUtil.close(resultSet,preparedStatement,conn);
+        return upload;
     }
 }

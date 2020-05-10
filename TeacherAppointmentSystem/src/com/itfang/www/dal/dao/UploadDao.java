@@ -17,4 +17,6 @@ public interface UploadDao {
      * @throws SQLException
      */
     boolean saveUpload(Upload upload) throws SQLException;
+
+    Upload getUpload(int studentId) throws SQLException;
 }

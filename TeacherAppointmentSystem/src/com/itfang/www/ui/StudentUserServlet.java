@@ -178,33 +178,6 @@ public class StudentUserServlet extends BaseServlet {
      * @throws ParseException
      */
     public Object apply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException, FileUploadException {
-//        //1,设置编码
-////        request.setCharacterEncoding("utf-8");
-////        //2,获取请求参数
-////        String _teacherId = (String) request.getSession().getAttribute("teacherId");
-////        int teacherId = Integer.parseInt(_teacherId);
-////        String teacherName = (String) request.getSession().getAttribute("teacherName");
-////        StudentUser studentUser = (StudentUser) request.getSession().getAttribute("studentUser");
-////        int studentId = studentUser.getStudentId();
-////        String studentName = request.getParameter("name");
-////        String studentNumber = request.getParameter("number");
-////        String _applyTime = request.getParameter("time");
-////        Date applyTime = null;
-////        if (!(_applyTime == null || "".equals(_applyTime))){
-////            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-////            applyTime = simpleDateFormat.parse(_applyTime);
-////        }
-////        //3,封装申请表对象
-////        Application application = new Application();
-////        application.setTeacherId(teacherId);
-////        application.setTeacherName(teacherName);
-////        application.setStudentId(studentId);
-////        application.setStudentName(studentName);
-////        application.setStudentNumber(studentNumber);
-////        application.setApplyTime(applyTime);
-////        //4,传入参数
-////        Object resultInfo = studentService.apply(application);
-////        return resultInfo;
         //1,获取项目部署的真实路径
         String realPath = this.getServletContext().getRealPath("upload");
         StudentUser studentUser = (StudentUser) request.getSession().getAttribute("studentUser");

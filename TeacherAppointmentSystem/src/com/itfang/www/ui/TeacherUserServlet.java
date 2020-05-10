@@ -298,4 +298,21 @@ public class TeacherUserServlet extends BaseServlet {
         request.getSession().setAttribute("username",username);
         return null;
     }
+
+    public Object checkDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取请求参数
+        String _studentId = request.getParameter("studentId");
+        if (_studentId == null || "".equals(_studentId) ){
+            return null;
+        }
+        int studentId = Integer.parseInt(_studentId);
+        //3,传入参数
+        ResultInfo resultInfo = teacherService.getStudent(studentId);
+        Upload upload = teacherService.getUpload(studentId);
+        request.getSession().setAttribute("student",(Student)resultInfo.getData());
+        request.getSession().setAttribute("upload",upload);
+        return resultInfo;
+    }
 }
