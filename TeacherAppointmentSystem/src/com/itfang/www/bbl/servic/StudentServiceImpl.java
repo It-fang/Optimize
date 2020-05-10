@@ -6,6 +6,7 @@ import org.apache.commons.fileupload.FileItem;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -170,7 +171,7 @@ public class StudentServiceImpl implements StudentService {
      * @throws SQLException
      */
     @Override
-    public Object apply(List<FileItem> fileItems,String realPath,StudentUser studentUser) throws SQLException, IOException {
+    public Object apply(List<FileItem> fileItems,String realPath,StudentUser studentUser) throws SQLException, IOException, ParseException {
 //        if ("".equals(application.getTeacherId()) || "".equals(application.getTeacherName()) || "".equals(application.getStudentName()) || "".equals(application.getStudentNumber()) || "".equals(application.getStudentId()) || "".equals(application.getApplyTime()) || application.getApplyTime() ==null){
 //            resultInfo.setStatus(false);
 //            resultInfo.setMessage("请将预约信息填完整！");
@@ -186,6 +187,8 @@ public class StudentServiceImpl implements StudentService {
         Map<String,String> params = new HashMap<String, String>(10);
         //存到服务器的路径
         String filePath = null;
+        //存到服务器中的图片名
+        String fileName = null;
         File file = new File(realPath);
         //判断存储位置的目录是否存在,不存在则创建
         if(!file.exists()&&!file.isDirectory()){
@@ -204,7 +207,12 @@ public class StudentServiceImpl implements StudentService {
                 }
                 params.put(key,value);
             }else{
-                String fileName = fileItem.getName();
+                fileName = fileItem.getName();
+                if (fileName == null || "".equals(fileName)){
+                    resultInfo.setMessage("请将预约信息填写完整!");
+                    resultInfo.setStatus(false);
+                    return resultInfo;
+                }
                 if (fileName.contains(":")){
                     fileName = fileName.substring(fileName.indexOf("\\"+1));
                 }
@@ -214,8 +222,8 @@ public class StudentServiceImpl implements StudentService {
                 //拼接保存到服务器的路径,存放路径+文件名
                 SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
                 String ms = df.format(new Date());
-
-                filePath = realPath + "\\" + ms + fileName;
+                fileName = ms + fileName;
+                filePath = realPath + "\\" + fileName;
                 //构建输入输出流
                 InputStream in = fileItem.getInputStream();
                 OutputStream out = new FileOutputStream(filePath);
@@ -230,10 +238,41 @@ public class StudentServiceImpl implements StudentService {
             }
         }
 
+        //封装application对象
         Application application = new Application();
+        application.setTeacherId(Integer.parseInt(params.get("teacherId")));
+        application.setTeacherName(params.get("teacherName"));
+        application.setStudentId(studentUser.getStudentId());
+        application.setStudentName(params.get("name"));
+        application.setStudentNumber(params.get("number"));
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        application.setApplyTime(df.parse(params.get("time")));
 
+        //调用Dao层向数据库存放申请表数据
+        ApplicationDao applicationDao = new ApplicationDaoImpl();
+        boolean status = applicationDao.saveApplication(application);
+        if (status != true){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("提交失败");
+            return resultInfo;
+        }
 
-        return null;
+        //封装Upload对象
+        Upload upload = new Upload();
+        upload.setFileName(fileName);
+        upload.setStudentId(studentUser.getStudentId());
+
+        //调用Dao层向数据库存放文件存储信息
+        UploadDao uploadDao = new UploadDaoImpl();
+        status = uploadDao.saveUpload(upload);
+        if (status != true){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("提交失败");
+            return resultInfo;
+        }
+        resultInfo.setStatus(true);
+        resultInfo.setMessage("提交成功,请等待教师处理...");
+        return resultInfo;
     }
 
     /**

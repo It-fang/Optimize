@@ -6,6 +6,7 @@ import org.apache.commons.fileupload.FileItem;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public interface StudentService {
      * @return resultInfo
      * @throws SQLException
      */
-    Object apply(List<FileItem> fileItems,String realPath,StudentUser studentUser) throws SQLException, IOException;
+    Object apply(List<FileItem> fileItems,String realPath,StudentUser studentUser) throws SQLException, IOException, ParseException;
 
     /**
      * 查询预约结果

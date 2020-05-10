@@ -206,7 +206,7 @@ public class StudentUserServlet extends BaseServlet {
 ////        Object resultInfo = studentService.apply(application);
 ////        return resultInfo;
         //1,获取项目部署的真实路径
-        String realPath = this.getServletContext().getRealPath("WEB-INF/upload");
+        String realPath = this.getServletContext().getRealPath("upload");
         StudentUser studentUser = (StudentUser) request.getSession().getAttribute("studentUser");
         //1,创建DiskFileItemFactory工厂
         DiskFileItemFactory factory = new DiskFileItemFactory();
