@@ -37,14 +37,14 @@
     }
     .send{
         background-color: greenyellow;
-        width: 100px;
+        width: 103px;
         height: 50px;
-        margin-top: 50px;
+        margin-top: 43px;
     }
 </style>
 <script type="text/javascript">
     let ws;
-    let url = "ws://localhost:8080/TeacherAppointmentSystem_war_exploded/chatSocket?username=${sessionScope.username}";
+    let url = "ws://192.168.43.63:8080/TeacherAppointmentSystem_war_exploded/chatSocket?username=${sessionScope.username}";
     window.onload = connect;
     function connect() {
         if ("WebSocket" in window){
@@ -56,37 +56,52 @@
         ws.onmessage = function (event) {
             let message = new  Function("return" + event.data)();
             if (message.alert != undefined){
-                $("#content").append( message.date + message.alert + "<br/>");
+                $("#content").append( message.date + message.alert + "\n");
             }
             if (message.names != undefined){
                 $("#userList").html("")
                 $("#userList").append("用户列表 <br/>")
                 $(message.names).each(function () {
-                    $("#userList").append(this + "<br/>");
+                    $("#userList").append(this + "\n");
                 });
             }
             if (message.from != undefined){
-                $("#content").append(message.from+" "+message.date+
-                    " 说：<br/>"+message.sendMsg+"<br/>");
+                $("#content").append(message.from+" "+message.date+ " 说：\n"+message.sendMsg+"\n");
+                if (document.getElementById("content").scrollHeight - document.getElementById("content").clientHeight > 0){
+                    document.getElementById("content").scrollBy(0,50);
+                }
             }
         }
-
     }
 
     function send() {
         let msg = $("#msg").val();
-        ws.send(msg);
-        $("#msg").val("");
+        if (msg != null || msg != '' ||msg != undefined){
+            msg = msg.replace(/\s/g,"");
+            if (msg != ""){
+                ws.send(msg);
+                $("#msg").val("");
+            }else {
+                alert("发送内容不能为空");
+            }
+        }else {
+            alert("发送内容不能为空");
+        }
     }
 </script>
 
 <body>
 <h3>欢迎 , ${sessionScope.username}进入聊天室！！</h3>
-<div id="content" class="content">聊天框<br/>  </div>
-<div id="userList" class="userList"></div>
-<div style="float: left;clear: left">
-    <input id="msg" type="text" style="width: 400px; height: 95px">
-    <div style="border: 3px solid #EEEEEE; width: 100px; height: 100px;float: right">
+<%--<div id="content" class="content">聊天框<br/>  </div>--%>
+<div class="row">
+    <textarea id="content" class="col-xl-4" rows="10" readonly wrap="physical"></textarea>
+    <textarea id="userList" class="col-xl-1" rows="10" readonly wrap="physical"></textarea>
+</div>
+<%--<div style="float:right;" id="userList" class="userList"></div>--%>
+<div class="row">
+<%--    <input id="msg" type="text" style="width: 400px; height: 95px">--%>
+    <textarea id="msg" class="col-xl-4" rows="3"></textarea>
+    <div style="border: 3px solid #EEEEEE; width: 110px; height: 100px;float: right">
         <button type="button" class="send" onclick="send();">发送</button>
     </div>
 </div>
