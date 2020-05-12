@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Teacher Appointment System</title>
+    <title>教师预约系统</title>
     <script src="js/jquery-3.4.1.js"></script>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -105,5 +105,6 @@
         <button type="button" class="send" onclick="send();">发送</button>
     </div>
 </div>
+
 </body>
 </html>

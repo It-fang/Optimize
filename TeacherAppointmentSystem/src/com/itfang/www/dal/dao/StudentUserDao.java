@@ -5,6 +5,7 @@ import com.itfang.www.dal.po.StudentUser;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author it-fang
@@ -58,5 +59,18 @@ public interface StudentUserDao {
      */
     Student getStudent(int studentId) throws SQLException;
 
+    /**
+     * 根据学生对象的Id从数据库中删除学生注册申请
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
     boolean deleteStudent(int studentId) throws SQLException;
+
+    /**
+     * 获取数据库中所有的学生对象
+     * @return
+     * @throws SQLException
+     */
+    List<Student> listAllStudents() throws SQLException;
 }

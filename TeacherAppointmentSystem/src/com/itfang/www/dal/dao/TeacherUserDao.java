@@ -5,6 +5,7 @@ import com.itfang.www.dal.po.TeacherUser;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author it-fang
@@ -67,4 +68,11 @@ public interface TeacherUserDao {
      * @throws SQLException
      */
     boolean updateTeacher(Teacher teacher, int teacherId) throws SQLException;
+
+    /**
+     * 从数据库中获取所有教师对象
+     * @return
+     * @throws SQLException
+     */
+    List<Teacher> listAllTeachers() throws SQLException;
 }

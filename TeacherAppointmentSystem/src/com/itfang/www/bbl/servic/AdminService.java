@@ -5,6 +5,7 @@ import com.itfang.www.dal.po.ResultInfo;
 import com.itfang.www.dal.po.StudentUser;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 
 /**
  * @author it-fang
@@ -35,5 +36,20 @@ public interface AdminService {
      */
     Object agreeRegister(StudentUser studentUser) throws SQLException;
 
+    /**
+     * 拒绝注册申请
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
     Object refuseRegister(int studentId) throws SQLException;
+
+    /**
+     * 将所有学生和教师对象插入到公告表中去
+     * @param message
+     * @return
+     * @throws SQLException
+     * @throws ParseException
+     */
+    Object sendNotification(String message) throws SQLException, ParseException;
 }

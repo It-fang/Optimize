@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author it-fang
@@ -174,6 +176,12 @@ public class StudentUserDaoImpl implements StudentUserDao{
         return student;
     }
 
+    /**
+     * 根据学生Id从数据库中删除学生对象信息
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
     @Override
     public boolean deleteStudent(int studentId) throws SQLException {
         Connection conn = JdbcUtil.getConnection();
@@ -185,5 +193,34 @@ public class StudentUserDaoImpl implements StudentUserDao{
         preparedStatement.execute();
         JdbcUtil.close(preparedStatement,conn);
         return true;
+    }
+
+    /**
+     * 获取数据库中所有的学生对象
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<Student> listAllStudents() throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "select * from student";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Student> students = new ArrayList<Student>();
+        while (resultSet.next()){
+            Student student = new Student();
+            student.setId(resultSet.getInt("id"));
+            student.setNumber(resultSet.getString("number"));
+            student.setName(resultSet.getString("name"));
+            student.setSex(resultSet.getString("sex"));
+            student.setCollege(resultSet.getString("college"));
+            student.setMajor(resultSet.getString("major"));
+            student.setClas(resultSet.getString("clas"));
+
+            students.add(student);
+        }
+        JdbcUtil.close(resultSet,preparedStatement,conn);
+        return students;
     }
 }

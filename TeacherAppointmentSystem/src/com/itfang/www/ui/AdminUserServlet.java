@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -91,6 +92,15 @@ public class AdminUserServlet extends BaseServlet {
         return resultInfo;
     }
 
+    /**
+     * 拒绝注册申请
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
     public Object refuseRegister(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, SQLException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");
@@ -99,6 +109,25 @@ public class AdminUserServlet extends BaseServlet {
         int studentId = Integer.parseInt(_studentId);
         //3,传入参数
         Object resultInfo = adminService.refuseRegister(studentId);
+        return resultInfo;
+    }
+
+    /**
+     * 发送公告
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
+    public Object sendNotification(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ParseException {
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取参数
+        String message = request.getParameter("message");
+        //3,传入参数
+        Object resultInfo = adminService.sendNotification(message);
         return resultInfo;
     }
 }

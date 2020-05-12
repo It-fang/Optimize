@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Teacher Appointment System</title>
+    <title>教师预约系统</title>
     <script src="js/jquery-3.4.1.js"></script>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -65,6 +65,9 @@
     </div>
     <div style="float:right; margin: 5px;">
         <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/AdminUser/queryRegister" role="button">显示所有注册申请</a>
+    </div>
+    <div style="float:right; margin: 5px;">
+        <a class="btn btn-lg btn-primary" href="/TeacherAppointmentSystem_war_exploded/notification.jsp" role="button">发送通知</a>
     </div>
     <table border="1" class="table table-bordered table-hover">
         <tr class="success">

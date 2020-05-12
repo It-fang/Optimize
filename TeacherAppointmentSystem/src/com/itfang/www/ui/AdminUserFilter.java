@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author it-fang
  * 对请求进行拦截判断是否处于登陆状态
  */
-@WebFilter(urlPatterns = {"/AdminUser/*","/queryregister.jsp"})
+@WebFilter(urlPatterns = {"/AdminUser/*","/queryregister.jsp","/notification.jsp"})
 public class AdminUserFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {

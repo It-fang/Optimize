@@ -1,11 +1,10 @@
 package com.itfang.www.bbl.servic;
 
 import com.itfang.www.dal.dao.*;
-import com.itfang.www.dal.po.AdminUser;
-import com.itfang.www.dal.po.ResultInfo;
-import com.itfang.www.dal.po.StudentUser;
+import com.itfang.www.dal.po.*;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 
@@ -97,6 +96,12 @@ public class AdminServiceImpl implements AdminService {
         return resultInfo;
     }
 
+    /**
+     * 拒绝注册申请
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Object refuseRegister(int studentId) throws SQLException {
         boolean status = registerApplicationDao.deleteRegisterApplication(studentId);
@@ -114,6 +119,46 @@ public class AdminServiceImpl implements AdminService {
             resultInfo.setStatus(false);
             resultInfo.setMessage("拒绝失败!");
         }
+        return resultInfo;
+    }
+
+    /**
+     * 将所有学生和教师对象插入到公告表中去
+     * @param message
+     * @return
+     * @throws SQLException
+     * @throws ParseException
+     */
+    @Override
+    public Object sendNotification(String message) throws SQLException, ParseException {
+        if (message == null || "".equals(message)){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("发送内容不能为空！");
+            return resultInfo;
+        }
+        TeacherUserDao teacherUserDao = new TeacherUserDaoImpl();
+        List<Teacher> teachers = teacherUserDao.listAllTeachers();
+        NotificationDao notificationDao = new NotificationDaoImpl();
+        for (Teacher teacher : teachers) {
+            boolean status = notificationDao.insertTeacherId(teacher,message);
+            if (status == false){
+                resultInfo.setStatus(false);
+                resultInfo.setMessage("发送失败！");
+                return resultInfo;
+            }
+        }
+        StudentUserDao studentUserDao = new StudentUserDaoImpl();
+        List<Student> students = studentUserDao.listAllStudents();
+        for (Student student : students) {
+            boolean status = notificationDao.insertStudentId(student,message);
+            if (status == false){
+                resultInfo.setStatus(false);
+                resultInfo.setMessage("发送失败！");
+                return resultInfo;
+            }
+        }
+        resultInfo.setStatus(true);
+        resultInfo.setMessage("发送成功！");
         return resultInfo;
     }
 }

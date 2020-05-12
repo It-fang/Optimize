@@ -5,7 +5,9 @@ import com.itfang.www.dal.po.TeacherUser;
 import com.itfang.www.util.JdbcUtil;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author it-fang
@@ -202,5 +204,33 @@ public class TeacherUserDaoImpl implements TeacherUserDao {
         preparedStatement.execute();
         JdbcUtil.close(preparedStatement,conn);
         return true;
+    }
+
+    /**
+     * 从数据库中获取所有教师对象
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<Teacher> listAllTeachers() throws SQLException {
+        Connection conn = JdbcUtil.getConnection();
+        String sql = "" +
+                "select * from teacher";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Teacher> teachers = new ArrayList<Teacher>();
+        while (resultSet.next()){
+            Teacher teacher = new Teacher();
+            teacher.setId(resultSet.getInt("id"));
+            teacher.setName(resultSet.getString("name"));
+            teacher.setNumber(resultSet.getString("number"));
+            teacher.setCollege(resultSet.getString("college"));
+            teacher.setMajor(resultSet.getString("major"));
+            teacher.setClas(resultSet.getString("clas"));
+            teacher.setFreeTime(resultSet.getDate("free_time"));
+            teachers.add(teacher);
+        }
+        JdbcUtil.close(resultSet,preparedStatement,conn);
+        return teachers;
     }
 }
