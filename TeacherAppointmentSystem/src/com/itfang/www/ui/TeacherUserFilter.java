@@ -19,7 +19,7 @@ public class TeacherUserFilter implements Filter {
         String uri = request.getRequestURI();
         //3,判断是否跟教师用户登陆和注册相关的资源
         if (uri.contains("/teacherlogin.jsp")|| uri.contains("TeacherUser/checkUsername")
-                || uri.contains("TeacherUser/login")) {
+                || uri.contains("TeacherUser/login") || uri.contains("TeacherUser/createVerifyCode")) {
             chain.doFilter(req, resp);
         } else if (uri.contains("/teacherregister.html") || uri.contains("TeacherUser/register")) {
             //判断是否登陆超级管理员账号

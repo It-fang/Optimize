@@ -100,5 +100,19 @@ public interface TeacherService {
      */
     Object agreeSelect(int teacherId, String[] studentIds) throws SQLException;
 
+    /**
+     * 根据学生用户Id获得学生用户上传的图片的信息
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
     Upload getUpload(int studentId) throws SQLException;
+
+    /**
+     * 判断用户输入的验证码是否正确
+     * @param code
+     * @param realCode
+     * @return
+     */
+    Object checkCode(String code, String realCode);
 }

@@ -278,10 +278,38 @@ public class TeacherServiceImpl implements TeacherService {
         return resultInfo;
     }
 
+    /**
+     * 根据学生用户Id获得学生用户上传的图片的信息
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Upload getUpload(int studentId) throws SQLException {
         UploadDao uploadDao = new UploadDaoImpl();
         Upload upload = uploadDao.getUpload(studentId);
         return upload;
+    }
+
+    /**
+     * 判断用户输入的验证码是否正确
+     * @param code
+     * @param realCode
+     * @return
+     */
+    @Override
+    public Object checkCode(String code, String realCode) {
+        if (code == null || "".equals(code)){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("请输入验证码");
+            return resultInfo;
+        }
+        if (!realCode.equalsIgnoreCase(code)){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("验证码错误");
+            return resultInfo;
+        }
+        resultInfo.setStatus(true);
+        return resultInfo;
     }
 }

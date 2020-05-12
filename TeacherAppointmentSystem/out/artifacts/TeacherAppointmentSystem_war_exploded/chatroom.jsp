@@ -44,7 +44,7 @@
 </style>
 <script type="text/javascript">
     let ws;
-    let url = "ws://192.168.43.63:8080/TeacherAppointmentSystem_war_exploded/chatSocket?username=${sessionScope.username}";
+    let url = "ws://localhost:8080/TeacherAppointmentSystem_war_exploded/chatSocket?username=${sessionScope.username}";
     window.onload = connect;
     function connect() {
         if ("WebSocket" in window){
@@ -68,7 +68,7 @@
             if (message.from != undefined){
                 $("#content").append(message.from+" "+message.date+ " 说：\n"+message.sendMsg+"\n");
                 if (document.getElementById("content").scrollHeight - document.getElementById("content").clientHeight > 0){
-                    document.getElementById("content").scrollBy(0,50);
+                    document.getElementById("content").scrollBy(0,100);
                 }
             }
         }

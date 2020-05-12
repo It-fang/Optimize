@@ -4,17 +4,20 @@ import com.google.gson.Gson;
 import com.itfang.www.bbl.servic.StudentService;
 import com.itfang.www.bbl.servic.StudentServiceImpl;
 import com.itfang.www.dal.po.*;
+import com.itfang.www.util.VerifyCodeUntil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
@@ -70,6 +73,8 @@ public class StudentUserServlet extends BaseServlet {
         String college = request.getParameter("college");
         String major = request.getParameter("major");
         String clas = request.getParameter("clas");
+        String code = request.getParameter("code");
+        String realCode = (String) request.getSession().getAttribute("realCode");
         //3,封装Student对象
         Student student = new Student();
         student.setName(name);
@@ -83,7 +88,10 @@ public class StudentUserServlet extends BaseServlet {
         studentUser.setUsername(username);
         studentUser.setPassword(password);
         //4,传入参数
-        Object resultInfo = studentService.register(student,studentUser);
+        ResultInfo resultInfo = (ResultInfo)studentService.checkCode(code,realCode);
+        if (resultInfo.isStatus()){
+            resultInfo = (ResultInfo)studentService.register(student,studentUser);
+        }
         return resultInfo;
     }
 
@@ -241,6 +249,25 @@ public class StudentUserServlet extends BaseServlet {
         String username = studentUser.getUsername();
         //3,将username存入Session中
         request.getSession().setAttribute("username",username);
+        return null;
+    }
+
+    /**
+     * 生成验证码图片
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     */
+    public Object createVerifyCode(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //调用验证码工具生成验证码
+        VerifyCodeUntil until = new VerifyCodeUntil();
+        BufferedImage image = until.getImage();
+        //获取验证码中的字符串并存入session域中
+        request.getSession().setAttribute("realCode",until.getText());
+        //将图片发送到页面上
+        ImageIO.write(image,"jpg",response.getOutputStream());
         return null;
     }
 }

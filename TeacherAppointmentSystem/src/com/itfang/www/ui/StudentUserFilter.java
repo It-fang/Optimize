@@ -20,7 +20,7 @@ public class StudentUserFilter implements Filter {
         //3,判断是否跟学生用户登陆和注册相关的资源
         if (uri.contains("/studentlogin.jsp") || uri.contains("/studentregister.html")
                 ||uri.contains("StudentUser/register") || uri.contains("StudentUser/checkUsername")
-                || uri.contains("StudentUser/login")){
+                || uri.contains("StudentUser/login") || uri.contains("StudentUser/createVerifyCode")){
             chain.doFilter(req, resp);
         }else {
             //判断学生用户是否登陆

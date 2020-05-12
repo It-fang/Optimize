@@ -287,4 +287,26 @@ public class StudentServiceImpl implements StudentService {
         }
         return resultInfo;
     }
+
+    /**
+     * 判断用户输入的验证码是否正确
+     * @param code
+     * @param realCode
+     * @return
+     */
+    @Override
+    public Object checkCode(String code, String realCode) {
+        if (code == null || "".equals(code)){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("请输入验证码");
+            return resultInfo;
+        }
+        if (!realCode.equalsIgnoreCase(code)){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("验证码错误");
+            return resultInfo;
+        }
+        resultInfo.setStatus(true);
+        return resultInfo;
+    }
 }

@@ -5,13 +5,16 @@ import com.itfang.www.bbl.servic.StudentServiceImpl;
 import com.itfang.www.bbl.servic.TeacherService;
 import com.itfang.www.bbl.servic.TeacherServiceImpl;
 import com.itfang.www.dal.po.*;
+import com.itfang.www.util.VerifyCodeUntil;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -67,6 +70,8 @@ public class TeacherUserServlet extends BaseServlet {
         String college = request.getParameter("college");
         String major = request.getParameter("major");
         String clas = request.getParameter("clas");
+        String code = request.getParameter("code");
+        String realCode = (String) request.getSession().getAttribute("realCode");
         //3,封装Teacher对象
         Teacher teacher = new Teacher();
         teacher.setName(name);
@@ -79,7 +84,10 @@ public class TeacherUserServlet extends BaseServlet {
         teacherUser.setUsername(username);
         teacherUser.setPassword(password);
         //4,传入参数
-        Object resultInfo = teacherService.register(teacher,teacherUser);
+        ResultInfo resultInfo = (ResultInfo)teacherService.checkCode(code,realCode);
+        if (resultInfo.isStatus()){
+            resultInfo = (ResultInfo) teacherService.register(teacher,teacherUser);
+        }
         return resultInfo;
     }
 
@@ -299,6 +307,15 @@ public class TeacherUserServlet extends BaseServlet {
         return null;
     }
 
+    /**
+     * 查看学生用户的详细信息
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
     public Object checkDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
         //1,设置编码
         request.setCharacterEncoding("utf-8");
@@ -314,5 +331,24 @@ public class TeacherUserServlet extends BaseServlet {
         request.getSession().setAttribute("student",(Student)resultInfo.getData());
         request.getSession().setAttribute("upload",upload);
         return resultInfo;
+    }
+
+    /**
+     * 生成验证码图片
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     */
+    public Object createVerifyCode(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //调用验证码工具生成验证码
+        VerifyCodeUntil until = new VerifyCodeUntil();
+        BufferedImage image = until.getImage();
+        //获取验证码中的字符串并存入session域中
+        request.getSession().setAttribute("realCode",until.getText());
+        //将图片发送到页面上
+        ImageIO.write(image,"jpg",response.getOutputStream());
+        return null;
     }
 }

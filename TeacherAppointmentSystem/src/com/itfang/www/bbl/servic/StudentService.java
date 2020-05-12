@@ -70,4 +70,12 @@ public interface StudentService {
      * @throws SQLException
      */
     Object queryResult(int studentId) throws SQLException;
+
+    /**
+     * 判断用户输入的验证码是否正确
+     * @param code
+     * @param realCode
+     * @return
+     */
+    Object checkCode(String code, String realCode);
 }
