@@ -78,4 +78,20 @@ public interface StudentService {
      * @return
      */
     Object checkCode(String code, String realCode);
+
+    /**
+     * 获取公告表该用户未读的信息
+     * @param studentUser
+     * @return
+     * @throws SQLException
+     */
+    Object queryInformationAuto(StudentUser studentUser) throws SQLException;
+
+    /**
+     * 获取公告表该用户已读的信息
+     * @param studentUser
+     * @return
+     * @throws SQLException
+     */
+    Object queryInformation(StudentUser studentUser) throws SQLException;
 }

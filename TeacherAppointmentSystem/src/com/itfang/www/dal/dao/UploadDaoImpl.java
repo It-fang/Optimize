@@ -10,6 +10,7 @@ import java.sql.*;
  * 上传文件的相关存放信息
  */
 public class UploadDaoImpl implements UploadDao {
+
     /**
      * 将上传的文件的相关信息保存到数据库中
      * @param upload
@@ -31,6 +32,12 @@ public class UploadDaoImpl implements UploadDao {
         return true;
     }
 
+    /**
+     * 获得上传的文件的信息
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Upload getUpload(int studentId) throws SQLException {
         Connection conn = JdbcUtil.getConnection();

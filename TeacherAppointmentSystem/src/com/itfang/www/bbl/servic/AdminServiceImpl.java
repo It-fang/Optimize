@@ -136,9 +136,11 @@ public class AdminServiceImpl implements AdminService {
             resultInfo.setMessage("发送内容不能为空！");
             return resultInfo;
         }
+
         TeacherUserDao teacherUserDao = new TeacherUserDaoImpl();
         List<Teacher> teachers = teacherUserDao.listAllTeachers();
         NotificationDao notificationDao = new NotificationDaoImpl();
+        notificationDao.clearNotification();
         for (Teacher teacher : teachers) {
             boolean status = notificationDao.insertTeacherId(teacher,message);
             if (status == false){

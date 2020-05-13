@@ -18,5 +18,11 @@ public interface UploadDao {
      */
     boolean saveUpload(Upload upload) throws SQLException;
 
+    /**
+     * 获得上传的文件的信息
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
     Upload getUpload(int studentId) throws SQLException;
 }

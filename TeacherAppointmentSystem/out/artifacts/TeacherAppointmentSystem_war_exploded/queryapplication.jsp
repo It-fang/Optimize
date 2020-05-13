@@ -30,7 +30,7 @@
     <script>
         function deleteApplication(teacherId,studentId) {
             if (confirm("一旦删除,学生申请将被销毁！您确定要删除吗？")){
-                $.post("TeacherUser/deleteApplication",{teacherId:teacherId,studentId:studentId},function (resultInfo) {
+                $.post("deleteApplication",{teacherId:teacherId,studentId:studentId},function (resultInfo) {
                     if (resultInfo.status){
                         alert(resultInfo.message);
                         window.location.href = "/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication";
@@ -76,18 +76,41 @@
             }
         }
     </script>
+<%--    刷新页面后判断是否有未读的公告--%>
+    <script>
+        $(function () {
+            $.post("queryInformationAuto",{},function (resultInfo) {
+                if (resultInfo.status){
+                    alert(resultInfo.message);
+                }
+            },"json");
+        });
+    </script>
+<%--    手动查询公告--%>
+    <script>
+        $(function () {
+            $("#query").click(function () {
+                $.post("queryInformation",{},function (resultInfo) {
+                    if (resultInfo.status){
+                        alert(resultInfo.message);
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
+<a style="float: right;margin-right: 100px;margin-top: 20px" id="query">查询公告</a>
 <div class="container">
     <h3><p class="text-center">学生预约申请列表</p></h3>
     <div style="float:left; margin: 10px;">
         <a class="btn btn-primary" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/toModify" role="button">修改自己信息</a>
     </div>
     <div style="float:right; margin: 5px;">
-        <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication" role="button">显示所有预约申请</a>
+        <a class="btn  btn-success" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/queryApplication" role="button">显示所有预约申请</a>
     </div>
     <div style="float:right; margin: 5px;">
-        <a class="btn btn-lg btn-success" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/teacherEnterChatRoom" role="button">进入聊天室</a>
+        <a class="btn  btn-success" href="/TeacherAppointmentSystem_war_exploded/TeacherUser/teacherEnterChatRoom" role="button">进入聊天室</a>
     </div>
     <div style="float:left; margin: 10px;">
         <a class="btn btn-primary"  id="agreeSelect" role="button">同意所选预约申请</a>

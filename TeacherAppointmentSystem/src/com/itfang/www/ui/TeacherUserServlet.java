@@ -351,4 +351,42 @@ public class TeacherUserServlet extends BaseServlet {
         ImageIO.write(image,"jpg",response.getOutputStream());
         return null;
     }
+
+    /**
+     * 获取公告表该用户未读的信息
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
+    public Object queryInformationAuto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取参数
+        TeacherUser teacherUser = (TeacherUser) request.getSession().getAttribute("teacherUser");
+        //3,传入参数
+        Object resultInfo = teacherService.queryInformationAuto(teacherUser);
+        return resultInfo;
+    }
+
+    /**
+     * 获取公告表该用户已读的信息
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
+    public Object queryInformation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        //1,设置编码
+        request.setCharacterEncoding("utf-8");
+        //2,获取参数
+        TeacherUser teacherUser = (TeacherUser) request.getSession().getAttribute("teacherUser");
+        //3,传入参数
+        Object resultInfo = teacherService.queryInformation(teacherUser);
+        return resultInfo;
+    }
 }

@@ -26,8 +26,32 @@
             text-align: center;
         }
     </style>
+
+<%--    刷新页面后判断是否有未读的公告--%>
+    <script>
+        $(function () {
+            $.post("StudentUser/queryInformationAuto",{},function (resultInfo) {
+                if (resultInfo.status){
+                    alert(resultInfo.message);
+                }
+            },"json");
+        });
+    </script>
+<%--    手动查询公告--%>
+    <script>
+        $(function () {
+            $("#query").click(function () {
+                $.post("StudentUser/queryInformation",{},function (resultInfo) {
+                    if (resultInfo.status){
+                        alert(resultInfo.message);
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
+<a style="float: right;margin-right: 100px;margin-top: 20px" id="query">查询公告</a>
 <div class="container">
     <h3><p class="text-center">教师信息列表</p></h3>
     <form class="form-inline" href="/TeacherAppointmentSystem_war_exploded/StudentUser/queryTeacher" id="form" method="post">

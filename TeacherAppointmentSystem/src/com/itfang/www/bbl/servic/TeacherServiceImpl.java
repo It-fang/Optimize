@@ -312,4 +312,49 @@ public class TeacherServiceImpl implements TeacherService {
         resultInfo.setStatus(true);
         return resultInfo;
     }
+
+    /**
+     * 获取公告表该用户未读的信息
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public Object queryInformationAuto(TeacherUser teacherUser) throws SQLException {
+        //获取该用户未读的消息
+        NotificationDao notificationDao = new NotificationDaoImpl();
+        Notification notification = notificationDao.getTeacherInformation(teacherUser.getTeacherId(),0);
+        if (notification.getMessage() == null || "".equals(notification.getMessage())){
+            resultInfo.setStatus(false);
+            return resultInfo;
+        }
+        //将未读的消息设置成已读
+        notificationDao.setTeacherAlready(teacherUser.getTeacherId());
+        resultInfo.setStatus(true);
+        resultInfo.setMessage("                           公告" + "\r" + "内容:      " + notification.getMessage() + "\r" + "日期:      " + notification.getDate());
+        return resultInfo;
+
+    }
+
+    /**
+     * 获取公告表该用户已读的信息
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public Object queryInformation(TeacherUser teacherUser) throws SQLException {
+        //获得该用户已读的消息
+        NotificationDao notificationDao = new NotificationDaoImpl();
+        Notification notification = notificationDao.getTeacherInformation(teacherUser.getTeacherId(),1);
+        if (notification.getMessage() == null || "".equals(notification.getMessage())){
+            resultInfo.setStatus(false);
+            resultInfo.setMessage("当前没有任何公告");
+            return resultInfo;
+        }
+        resultInfo.setStatus(true);
+        resultInfo.setMessage("                           公告" + "\r" + "内容:      " + notification.getMessage() + "\r" + "日期:      " + notification.getDate());
+        return resultInfo;
+
+    }
 }

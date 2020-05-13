@@ -115,4 +115,20 @@ public interface TeacherService {
      * @return
      */
     Object checkCode(String code, String realCode);
+
+    /**
+     * 获取公告表该用户未读的信息
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
+    Object queryInformationAuto(TeacherUser teacherUser) throws SQLException;
+
+    /**
+     * 获取公告表该用户已读的信息
+     * @param teacherUser
+     * @return
+     * @throws SQLException
+     */
+    Object queryInformation(TeacherUser teacherUser) throws SQLException;
 }

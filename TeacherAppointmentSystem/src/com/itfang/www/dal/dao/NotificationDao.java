@@ -1,5 +1,6 @@
 package com.itfang.www.dal.dao;
 
+import com.itfang.www.dal.po.Notification;
 import com.itfang.www.dal.po.Student;
 import com.itfang.www.dal.po.Teacher;
 
@@ -31,4 +32,43 @@ public interface NotificationDao {
      * @throws ParseException
      */
     boolean insertStudentId(Student student, String message) throws SQLException, ParseException;
+
+    /**
+     * 根据学生Id和消息状态从数据库中获得公告对象
+     * @param studentId
+     * @param status
+     * @return
+     * @throws SQLException
+     */
+    Notification getStudentInformation(int studentId,int status) throws SQLException;
+
+    /**
+     * 根据学生Id将公告表的数据设置成已读状态
+     * @param studentId
+     * @throws SQLException
+     */
+    void setStudentAlready(int studentId) throws SQLException;
+
+    /**
+     * 根据教师Id和消息状态从数据库中获得公告对象
+     * @param teacherId
+     * @param status
+     * @return
+     * @throws SQLException
+     */
+    Notification getTeacherInformation(int teacherId, int status) throws SQLException;
+
+    /**
+     * 根据教师Id将公告表的数据设置成已读状态
+     * @param teacherId
+     * @throws SQLException
+     */
+    void setTeacherAlready(int teacherId) throws SQLException;
+
+    /**
+     * 清空公告表中数据
+     * @throws SQLException
+     */
+    void clearNotification() throws SQLException;
+
 }
